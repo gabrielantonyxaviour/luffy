@@ -1,0 +1,48 @@
+{
+  "arbitrumsepolia": {
+    "merkleRootMultisigIsmFactory": "0x20166f04ed7D1Bf4938bACa0f9456b7e676eD2A2",
+    "messageIdMultisigIsmFactory": "0xBbF4E51Cfa0f681a4eBBC5E800b4f53507B00A5B",
+    "aggregationIsmFactory": "0x71Ef7f9Ac3a17852de46d8e34A686B055946E9D5",
+    "aggregationHookFactory": "0xCcD7BB93B5B4368aE30f5fa77F9BDf30d39D2CaB",
+    "routingIsmFactory": "0x620b89DeE45a3Fb1675182B8AD538B656b3D8366",
+    "interchainSecurityModule": "0xDf1744a71f531FD306408403BBE9b507a943D277",
+    "chilizspicy": {
+      "messageIdMultisigIsm": "0x5897435e61cFb744B0369077f9940Bc74cf2025a",
+      "merkleRootMultisigIsm": "0x6E1Ee9686C9A68f04CDFEE365C43f023d2E3127F",
+      "staticAggregationIsm": "0x38dbACe7d3eCe842F90d55B72313a644F2ddBd3F"
+    },
+    "domainRoutingIsm": "0xDf1744a71f531FD306408403BBE9b507a943D277",
+    "merkleTreeHook": "0x37D6450CC19fdd99eDcC627eCc84626e2e7bD5ae",
+    "proxyAdmin": "0xfe5DE471869361B214afD5D129C76E1d7cD3C61E",
+    "storageGasOracle": "0x7e2B01B5d519b37d3E5FB3b0CAcAAA64499c4cF7",
+    "interchainGasPaymaster": "0xbfef5DE3805a60E7dcB079B616b8096bd96d3712",
+    "aggregationHook": "0xAcBDCa4220C46E5e2dfA565Dd1a84eF89702aF64",
+    "protocolFee": "0xcdd6C68A007eE45DBe8D21fB6f612B2A7b3e7890",
+    "mailbox": "0x9288277372982b74C174132B5f43B9b1900855Fd",
+    "validatorAnnounce": "0x86c207ebF3aE9e9A93B9a045360a8f5Fc983C777",
+    "testRecipient": "0x30DFfC0693bb1bBd756bDFFdc8df5F56cc2d30C2"
+  },
+  "chilizspicy": {
+    "merkleRootMultisigIsmFactory": "0x9b7a42bFE8f8Df9d43f368Baf9480fB7193Cf06a",
+    "messageIdMultisigIsmFactory": "0x17517F552d14E3ae1b2a8005f594D7916CE6466d",
+    "aggregationIsmFactory": "0x0C29b8C5121a4a72E9D623eFe418875fc7E3Dd15",
+    "aggregationHookFactory": "0xcfA34a6eAA2Db2E89f77E754B3Aa62BD82042556",
+    "routingIsmFactory": "0xeCC1d950bDE3fE9b632A159E24E60a29601aC5fC",
+    "interchainSecurityModule": "0x9ef7Fc48d4ecFf6dC61A3ef5E1eDbAF0659BfD84",
+    "arbitrumsepolia": {
+      "messageIdMultisigIsm": "0x325e70622C1c9b4F66CE21aa7ECDcF9D470b8440",
+      "merkleRootMultisigIsm": "0x1e95A4bc1ab38FA3A0f250E5b37659423656a341",
+      "staticAggregationIsm": "0x1f75287DFb4DdEC2679B5174F4C67F74d83754B1"
+    },
+    "domainRoutingIsm": "0x9ef7Fc48d4ecFf6dC61A3ef5E1eDbAF0659BfD84",
+    "merkleTreeHook": "0x9288277372982b74C174132B5f43B9b1900855Fd",
+    "proxyAdmin": "0x20166f04ed7D1Bf4938bACa0f9456b7e676eD2A2",
+    "storageGasOracle": "0xEa8b3dbDAe7779229E8e075FBdf61D0E0a63fb75",
+    "interchainGasPaymaster": "0xdBFf454c77307ccaA6c2762F9f515559f6d728D3",
+    "aggregationHook": "0x560e5B784b9d97dEF372b60c4d33E448bCd130B1",
+    "protocolFee": "0x0A357b526Be3002d4fBBA5BC05444E92Fbc6A760",
+    "mailbox": "0x71Ef7f9Ac3a17852de46d8e34A686B055946E9D5",
+    "validatorAnnounce": "0xbfef5DE3805a60E7dcB079B616b8096bd96d3712",
+    "testRecipient": "0x861F4ef6b6dfe5072A10A0bD1Ee1AB678aBED519"
+  }
+}
