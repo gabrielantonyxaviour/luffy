@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { Box, Container, Typography, Stack } from '@mui/material';
 import { Links } from './Links';
 
@@ -12,6 +13,8 @@ const styles = {
 };
 
 export const Header = () => {
+  const pathname = usePathname();
+
   return (
     <Box component='nav'>
       <Container sx={styles} maxWidth='xl'>
@@ -26,7 +29,7 @@ export const Header = () => {
             Luffy
           </Typography>
         </Stack>
-        <Links />
+        <Links pathname={pathname} />
         <Typography>Avatar</Typography>
       </Container>
     </Box>
