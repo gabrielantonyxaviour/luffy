@@ -1,0 +1,15 @@
+chilizspicy:
+  name: chilizspicy
+  chainId: 88882
+  domainId: 88882
+  protocol: ethereum
+  rpcUrls:
+    - http: https://spicy-rpc.chiliz.com/
+arbitrumsepolia:
+  name: arbitrumsepolia
+  chainId: 421614
+  domainId: 421614
+  protocol: ethereum
+  rpcUrls:
+    - http: https://sepolia-rollup.arbitrum.io/rpc
+
