@@ -18,23 +18,19 @@ const nextLinkStyles = {
 
 const links = [
   {
-    href: '#home',
+    href: '/',
     text: 'Home'
   },
   {
-    href: '#gameplay',
+    href: '/gameplay',
     text: 'Game Play'
   },
   {
-    href: '#squad',
-    text: 'Squad'
-  },
-  {
-    href: '#leaderboard',
+    href: '/leaderboard',
     text: 'Leaderboard'
   },
   {
-    href: '#playerlist',
+    href: '/playerlist',
     text: 'Player List'
   }
 ];
@@ -42,11 +38,18 @@ const links = [
 type LinkProps = {
   href: string;
   text: string;
+  isActive: boolean;
 };
 
-const Link: React.FC<LinkProps> = ({ href, text }) => {
+const Link: React.FC<LinkProps> = ({ href, text, isActive }) => {
   return (
-    <Typography component='span' sx={(theme) => styles(theme)}>
+    <Typography
+      component='span'
+      sx={[
+        (theme) => styles(theme),
+        (theme) => (isActive ? { color: theme.palette.warning.main } : {})
+      ]}
+    >
       <NextLink href={href} style={nextLinkStyles}>
         {text}
       </NextLink>
@@ -54,11 +57,15 @@ const Link: React.FC<LinkProps> = ({ href, text }) => {
   );
 };
 
-export const Links = () => {
+type LinksProps = {
+  pathname: string;
+};
+
+export const Links: React.FC<LinksProps> = ({ pathname }) => {
   return (
     <Stack direction='row' spacing={4}>
       {links.map(({ href, text }) => (
-        <Link href={href} text={text} key={href} />
+        <Link href={href} text={text} key={href} isActive={pathname === href} />
       ))}
     </Stack>
   );
