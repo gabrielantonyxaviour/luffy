@@ -6,7 +6,7 @@ const styles = (theme: Theme) => ({
   textDecoration: 'none',
   color: '#fff',
   '&:hover': {
-    color: theme.palette.warning.main
+    color: theme.palette.warning.light
   }
 });
 
@@ -47,7 +47,7 @@ const Link: React.FC<LinkProps> = ({ href, text, isActive }) => {
       component='span'
       sx={[
         (theme) => styles(theme),
-        (theme) => (isActive ? { color: theme.palette.warning.main } : {})
+        (theme) => (isActive ? { color: theme.palette.warning.dark } : {})
       ]}
     >
       <NextLink href={href} style={nextLinkStyles}>
