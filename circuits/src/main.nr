@@ -1,13 +1,6 @@
 use dep::std;
 use dep::ecrecover;
 
-#[oracle(getFid)]
-unconstrained fn farcaster_id(address: Field) -> Field {}
-
-unconstrained fn get_farcaster_id(address: Field) -> Field {
-    farcaster_id(address)
-}
-
 global MERKLE_DEPTH = 8;
 fn main(
     signer_pub_x_key: [u8; 32],
