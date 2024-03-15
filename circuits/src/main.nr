@@ -1,7 +1,7 @@
 use dep::std;
 use dep::ecrecover;
 
-global MERKLE_DEPTH = 8;
+global MERKLE_DEPTH = 4;
 fn main(
     signer_pub_x_key: [u8; 32],
     signer_pub_y_key: [u8; 32],
