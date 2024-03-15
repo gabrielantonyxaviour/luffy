@@ -1,0 +1,231 @@
+[
+  {
+    "id": "1",
+    "name": "Thibaut Courtois",
+    "position": "GK",
+    "nationality": "Belgium",
+    "fixture": "France",
+    "statistics": {
+      "minutesPlayed": "90",
+      "saves": "3",
+      "fouls": "1",
+      "goalsConceded": "1",
+      "penaltiesSaved": "0",
+      "cleanSheets": "0",
+      "yellowCards": "0",
+      "redCards": "0",
+      "goals": "0",
+      "assists": "0",
+      "passingAccuracy": "80"
+    }
+  },
+  {
+    "id": "2",
+    "name": "Andrew Robertson",
+    "position": "DEF",
+    "nationality": "Scotland",
+    "fixture": "England",
+    "statistics": {
+      "minutesPlayed": "90",
+      "tackles": "3",
+      "interceptions": "2",
+      "clearances": "4",
+      "blocks": "1",
+      "aerialDuelsWon": "2",
+      "dribblesCompleted": "1",
+      "fouls": "1",
+      "yellowCards": "0",
+      "redCards": "0",
+      "goals": "0",
+      "assists": "0",
+      "passingAccuracy": "85"
+    }
+  },
+  {
+    "id": "3",
+    "name": "Virgil Van Dijk",
+    "position": "DEF",
+    "nationality": "Netherlands",
+    "fixture": "Spain",
+    "statistics": {
+      "minutesPlayed": "90",
+      "tackles": "2",
+      "interceptions": "3",
+      "clearances": "5",
+      "blocks": "2",
+      "aerialDuelsWon": "3",
+      "dribblesCompleted": "0",
+      "fouls": "1",
+      "yellowCards": "0",
+      "redCards": "0",
+      "goals": "0",
+      "assists": "0",
+      "passingAccuracy": "90"
+    }
+  },
+  {
+    "id": "4",
+    "name": "John Stones",
+    "position": "DEF",
+    "nationality": "England",
+    "fixture": "Scotland",
+    "statistics": {
+      "minutesPlayed": "90",
+      "tackles": "2",
+      "interceptions": "2",
+      "clearances": "3",
+      "blocks": "1",
+      "aerialDuelsWon": "2",
+      "dribblesCompleted": "0",
+      "fouls": "1",
+      "yellowCards": "0",
+      "redCards": "0",
+      "goals": "0",
+      "assists": "0",
+      "passingAccuracy": "85"
+    }
+  },
+  {
+    "id": "5",
+    "name": "Trent Alexander-Arnold",
+    "position": "DEF",
+    "nationality": "England",
+    "fixture": "Scotland",
+    "statistics": {
+      "minutesPlayed": "90",
+      "tackles": "2",
+      "interceptions": "2",
+      "clearances": "3",
+      "blocks": "1",
+      "aerialDuelsWon": "2",
+      "dribblesCompleted": "0",
+      "fouls": "1",
+      "yellowCards": "0",
+      "redCards": "0",
+      "goals": "0",
+      "assists": "0",
+      "passingAccuracy": "85"
+    }
+  },
+  {
+    "id": "6",
+    "name": "Kevin De Bruyne",
+    "position": "MID",
+    "nationality": "Belgium",
+    "fixture": "France",
+    "statistics": {
+      "minutesPlayed": "90",
+      "tackles": "2",
+      "interceptions": "2",
+      "clearances": "3",
+      "blocks": "1",
+      "aerialDuelsWon": "2",
+      "dribblesCompleted": "0",
+      "fouls": "1",
+      "yellowCards": "0",
+      "redCards": "0",
+      "goals": "0",
+      "assists": "3",
+      "passingAccuracy": "85"
+    }
+  },
+  {
+    "id": "7",
+    "name": "Jude Bellingham",
+    "position": "MID",
+    "nationality": "England",
+    "fixture": "Scotland",
+    "statistics": {
+      "minutesPlayed": "90",
+      "tackles": "2",
+      "interceptions": "2",
+      "clearances": "3",
+      "blocks": "1",
+      "aerialDuelsWon": "2",
+      "dribblesCompleted": "0",
+      "fouls": "1",
+      "yellowCards": "0",
+      "redCards": "0",
+      "goals": "1",
+      "assists": "0",
+      "passingAccuracy": "85"
+    }
+  },
+  {
+    "id": "8",
+    "name": "Rodri",
+    "position": "MID",
+    "nationality": "Spain",
+    "fixture": "Netherlands",
+    "statistics": {
+      "minutesPlayed": "90",
+      "tackles": "2",
+      "interceptions": "2",
+      "clearances": "3",
+      "blocks": "1",
+      "aerialDuelsWon": "2",
+      "dribblesCompleted": "0",
+      "fouls": "1",
+      "yellowCards": "0",
+      "redCards": "0",
+      "goals": "0",
+      "assists": "0",
+      "passingAccuracy": "85"
+    }
+  },
+  {
+    "id": "9",
+    "name": "Cristiano Ronaldo",
+    "position": "FWD",
+    "nationality": "Portugal",
+    "fixture": "Germany",
+    "statistics": {
+      "minutesPlayed": "90",
+      "shots": "5",
+      "shotsOnTarget": "3",
+      "shootingAccuracy": "60",
+      "fouls": "1",
+      "yellowCards": "0",
+      "redCards": "0",
+      "goals": "1",
+      "assists": "0",
+      "passingAccuracy": "75"
+    }
+  },
+  {
+    "id": "10",
+    "name": "Erling Haaland",
+    "position": "FWD",
+    "nationality": "Norway",
+    "fixture": "Italy",
+    "statistics": {
+      "minutesPlayed": "90",
+      "shots": "5",
+      "shotsOnTarget": "3",
+      "shootingAccuracy": "60",
+      "fouls": "1",
+      "yellowCards": "0",
+      "redCards": "0",
+      "goals": "1",
+      "assists": "0",
+      "passingAccuracy": "75"
+    }
+  },
+  {
+    "id": "11",
+    "name": "Kylian Mbappe",
+    "position": "FWD",
+    "nationality": "France",
+    "fixture": "Belgium",
+    "statistics": {
+      "minutesPlayed": "90",
+      "shots": "5",
+      "shotsOnTarget": "3",
+      "shootingAccuracy": "60",
+      "fouls": "1",
+      "yellowCards": "0",
+      "redCards": "0",
+      "goals": "1"
+    }
+  }
+]
