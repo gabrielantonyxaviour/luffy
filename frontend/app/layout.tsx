@@ -3,6 +3,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 import type { Metadata } from 'next';
 import { theme } from '@/theme';
+import { Header } from '@/components';
 
 export const metadata: Metadata = {
   title: 'Luffy',
@@ -21,6 +22,7 @@ export default function RootLayout({
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
             <CssBaseline />
+            <Header />
             {children}
           </ThemeProvider>
         </AppRouterCacheProvider>
