@@ -59,7 +59,7 @@ export const PlayerCard: React.FC<PlayerCardProps> = ({
       <Typography variant='body2' marginBottom={2}>
         {positionMap[position as keyof typeof positionMap]}
       </Typography>
-      <Link href='gameplay'>
+      <Link href='buildsquad'>
         <Button variant='outlined' color='warning'>
           {buttnText}
         </Button>

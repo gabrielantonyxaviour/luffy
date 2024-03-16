@@ -5,7 +5,7 @@ import { Pitch, SubmitSquad, Logger } from '@/components';
 import { useGeneralContext } from '@/contexts';
 import { useClientAuth } from '@/hooks';
 
-export default function GamePlay() {
+export default function BuildSquad() {
   const { squadGenerated, setSquadGenerated, addLog } = useGeneralContext();
   const { isAuthenticated } = useClientAuth();
 
@@ -18,7 +18,7 @@ export default function GamePlay() {
     <Box>
       <Container maxWidth='lg' sx={{ marginY: 3 }}>
         <Typography variant='h4' marginBottom={3}>
-          Game Play
+          Build Squad
         </Typography>
         <Stack
           direction='row'

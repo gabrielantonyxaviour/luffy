@@ -32,7 +32,7 @@ export const Hero = () => {
         <Typography variant='h4' sx={(theme) => styles(theme).subtext}>
           The web3 game for all football fans!
         </Typography>
-        <Link href='/gameplay'>
+        <Link href='/buildsquad'>
           <Button variant='contained'>Play Now</Button>
         </Link>
       </Container>
