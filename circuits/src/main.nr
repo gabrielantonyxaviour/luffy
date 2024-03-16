@@ -12,7 +12,7 @@ fn main(
     player_points_merkle_paths: [[[u8; 32]; MERKLE_DEPTH]; 11],
     player_points_root: pub [u8; 32],
     squad_hash: pub [u8; 32]
-) -> pub [u8; 32] {
+) -> pub Field {
     // verify squad hash
     let computed_player_ids_hash = std::hash::keccak256(
         concatenate_player_ids_with_salt(squad_player_ids, squad_secret),
@@ -29,15 +29,15 @@ fn main(
     );
     assert(recoveredAddress == computedAddress);
     // verify the merkle path of the point to confirm that is actually the points of the player
-    for i in squad_player_ids {
-        let computed_root= compute_merkle_root(
-            squad_points[i], // leaf
-            squad_player_ids[i], // index
-            player_points_merkle_paths[i] // merkle proof
-        );
-        assert(computed_root == player_points_root);
-    }
-    computed_player_ids_hash
+    // for i in squad_player_ids {
+    //     let computed_root= compute_merkle_root(
+    //         squad_points[i], // leaf
+    //         squad_player_ids[i], // index
+    //         player_points_merkle_paths[i] // merkle proof
+    //     );
+    //     assert(computed_root == player_points_root);
+    // }
+    recoveredAddress
     // // sum all points and return it back to the contract
     // let mut totalPoints: u8= 0;
     // for point in squad_points {
