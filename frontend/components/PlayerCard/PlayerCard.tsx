@@ -6,8 +6,8 @@ const styles = {
   container: {
     width: '240px',
     minWidth: '240px',
-    backgroundColor: '#0c1e33',
-    border: '1px solid #ffffff11',
+    backgroundColor: '#102640',
+    border: '1px solid #ffffff22',
     padding: 5,
     display: 'flex',
     flexDirection: 'column',
