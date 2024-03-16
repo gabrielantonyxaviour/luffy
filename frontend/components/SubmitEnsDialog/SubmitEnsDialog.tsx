@@ -9,9 +9,11 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Typography, Stack } from '@mui/material';
+import { useGeneralContext } from '@/contexts';
 
 export const SubmitEnsDialog = () => {
   const [open, setOpen] = useState(true);
+  const { setEns } = useGeneralContext();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -33,6 +35,7 @@ export const SubmitEnsDialog = () => {
             const formJson = Object.fromEntries((formData as any).entries());
             const subdomain = formJson.subdomain;
             console.log({ subdomain });
+            setEns(`${subdomain}.luffy.eth`);
             handleClose();
           }
         }}

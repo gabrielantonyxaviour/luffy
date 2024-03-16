@@ -1,3 +1,5 @@
+'use client';
+
 import type { PropsWithChildren } from 'react';
 import { useState } from 'react';
 import { GeneralContext, GeneralContextType } from './GeneralContext';

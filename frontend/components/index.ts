@@ -1,5 +1,6 @@
 export { DynamicProvider } from './DynamicProvider';
 export { DynamicWidget } from './DynamicWidget';
+export { EnsWidget } from './EnsWidget';
 export { Header } from './Header';
 export { Hero } from './Hero';
 export { PlayerCard } from './PlayerCard';
