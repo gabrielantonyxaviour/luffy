@@ -1,16 +1,20 @@
 pragma solidity ^0.8.10;
 
 import "./worldcoin/interface/IWorldcoinVerifier.sol";
+import "./interface/hyperlane/IMailbox.sol";
 
 error NotOwner(address caller);
+error NotMailbox(address caller);
 error InvalidGameweek(uint256 gameweek);
 error SelectSquadDisabled(uint256 gameweek);
 error WorldCoinVerificationFailed(address signal, uint256 root, uint256 nullifierHash, uint256[8] proof);
+error InadequateCrosschainFee(uint32 destinationDomain, uint256 requiredFee, uint256 sentFee);
 
 contract LuffyProtocol {
 
     address public owner;
-    address public worldcoinVerifier;
+    IWorldcoinVerifier public worldcoinVerifier;
+    IMailbox public mailbox;
     mapping(uint256=>mapping(uint256=>bytes32)) public gameWeekToSquadHash;
     mapping(uint256=>mapping(uint256=>uint256)) public playerPoints;
     mapping(address=>uint256) public addressToNullifier;
@@ -20,7 +24,7 @@ contract LuffyProtocol {
     bool public isSelectSquadEnabled;
     bool public worldcoinVerificationEnabled;
 
-    constructor(address _worldcoinVerifier, string[] memory _playersMetadata)
+    constructor(IMailbox _mailbox, IWorldcoinVerifier _worldcoinVerifier, string[] memory _playersMetadata)
     {
         worldcoinVerifier = _worldcoinVerifier;
         isSelectSquadEnabled = true;
@@ -36,9 +40,13 @@ contract LuffyProtocol {
     modifier onlyOwner {
         if(msg.sender != owner) revert NotOwner(msg.sender);
         _;
-     }
+    }
 
-    
+    modifier onlyMailbox() {
+        if(msg.sender != address(mailbox)) revert NotMailbox(msg.sender);
+        _;
+    }
+
     function transferOwnership(address _newOwner) public onlyOwner {
         address oldOwner = owner;
         owner = _newOwner;
@@ -71,7 +79,7 @@ contract LuffyProtocol {
     }
 
     function verifyWorldcoin(WorldcoinProofInput memory _wrldProof) public returns(bool) {
-        try IWorldcoinVerifier(worldcoinVerifier).verifyAndExecute(_wrldProof.signal, _wrldProof.root, _wrldProof.nullifierHash, _wrldProof.proof)
+        try worldcoinVerifier.verifyAndExecute(_wrldProof.signal, _wrldProof.root, _wrldProof.nullifierHash, _wrldProof.proof)
         {
             return true;
         } catch {
@@ -79,10 +87,30 @@ contract LuffyProtocol {
         }
     }
 
+    event SentPing(bytes32 indexed messageId, uint32 indexed destinationChain, address indexed destinationAddress, uint256 fee, bytes message);
+    event ReceivedPong(bytes32 indexed messageId, uint32 indexed originChain, address indexed senderAddress, string message); 
+    function pingHyperlane(uint32 destinationDomain, bytes32 recepientAddress, string memory message) public payable{
+
+        uint256 _requiredFee = mailbox.quoteDispatch(destinationDomain, recepientAddress, bytes(message));
+        if(msg.value < _requiredFee) revert InadequateCrosschainFee(destinationDomain, _requiredFee, msg.value);
+
+        bytes32 messageId = mailbox.dispatch{value: msg.value}(destinationDomain,recepientAddress,bytes("Hello, world"));
+        emit SentPing(messageId, destinationDomain, bytes32ToAddress(recepientAddress), msg.value, bytes(message));
+    }
+
+    function handle(uint32 _origin,bytes32 _sender,bytes calldata _message) external payable onlyMailbox{
+        _pongHyperlane(_origin, _sender, bytes32(0), _message);
+    }
+
+    function _pongHyperlane(uint32 originDomain, bytes32 senderAddress, bytes32 messageId, bytes memory message) internal{
+        emit ReceivedPong(messageId, originDomain, bytes32ToAddress(senderAddress), abi.decode(message, (string)));
+    }
 
 
-
-
+    function bytes32ToAddress(bytes32 _buf) internal pure returns (address) {
+        return address(uint160(uint256(_buf)));
+    }
+    
     
 }
 
