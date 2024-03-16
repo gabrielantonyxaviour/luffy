@@ -15,8 +15,7 @@ task("deploy-protocol", "Deploys the LuffyProtocol contract")
 
     const args = [
       "0x9288277372982b74C174132B5f43B9b1900855Fd",
-      "0x469449f251692e0779667583026b5a1e99512157",
-      ["sdfvs", "sfdcx", "asdvcds"],
+      ["Sample Player 1 Data", "Sample Player 2 Data", "Sample Player 3 Data"],
     ];
 
     const protocolContractFactory = await ethers.getContractFactory(

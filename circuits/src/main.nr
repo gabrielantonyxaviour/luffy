@@ -10,30 +10,31 @@ fn main(
     squad_points: [u8; 11],
     player_points_merkle_paths: [[[u8; 32]; MERKLE_DEPTH]; 11],
     player_points_root: pub [u8; 32],
-    squad_hash: pub [u8; 32]
-) -> pub u8 {
+    squad_hash: pub [u8; 32],
+    total_points: pub u8
+) {
     // verify ECDSA signature
     let computedAddress: Field = ecrecover::secp256k1::PubKey::from_xy(signer_pub_x_key, signer_pub_y_key).to_eth_address(); // Compute address from public key
     let recoveredAddress = ecrecover::ecrecover(signer_pub_x_key, signer_pub_y_key, signature, squad_hash);
     assert(recoveredAddress == computedAddress);
 
     // verify the merkle path of the point to confirm that is actually the points of the player
-    for i in squad_player_ids {
-        let computed_root= compute_merkle_root(
-            squad_points[i], // leaf
-            squad_player_ids[i], // index
-            player_points_merkle_paths[i] // merkle proof
-        );
-        assert(computed_root == player_points_root);
-    }
+    // for i in squad_player_ids {
+    //     let computed_root= compute_merkle_root(
+    //         squad_points[i], // leaf
+    //         squad_player_ids[i], // index
+    //         player_points_merkle_paths[i] // merkle proof
+    //     );
+    //     assert(computed_root == player_points_root);
+    // }
 
     // sum all points and return it back to the contract
-    let mut totalPoints: u8= 0;
+    let mut calculated_total_points: u8 = 0;
     for point in squad_points {
-        totalPoints+=point as u8;
+        calculated_total_points+=point as u8;
     }
 
-    totalPoints
+    assert(calculated_total_points == total_points);
 }
 
 fn concatenate_player_ids_with_salt(squad_player_ids: [u8; 11], player_ids_salt: [u8; 32]) -> [u8; 43] {
