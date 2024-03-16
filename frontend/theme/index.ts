@@ -32,27 +32,27 @@ export const theme = createTheme({
       variants: [
         {
           props: { variant: 'h1' },
-          style: { fontFamily: londrinaSolid.style.fontFamily }
+          style: { fontFamily: londrinaSolid.style.fontFamily, fontWeight: 400 }
         },
         {
           props: { variant: 'h2' },
-          style: { fontFamily: londrinaSolid.style.fontFamily }
+          style: { fontFamily: londrinaSolid.style.fontFamily, fontWeight: 400 }
         },
         {
           props: { variant: 'h3' },
-          style: { fontFamily: londrinaSolid.style.fontFamily }
+          style: { fontFamily: londrinaSolid.style.fontFamily, fontWeight: 400 }
         },
         {
           props: { variant: 'h4' },
-          style: { fontFamily: londrinaSolid.style.fontFamily }
+          style: { fontFamily: londrinaSolid.style.fontFamily, fontWeight: 400 }
         },
         {
           props: { variant: 'h5' },
-          style: { fontFamily: londrinaSolid.style.fontFamily }
+          style: { fontFamily: londrinaSolid.style.fontFamily, fontWeight: 400 }
         },
         {
           props: { variant: 'h6' },
-          style: { fontFamily: londrinaSolid.style.fontFamily }
+          style: { fontFamily: londrinaSolid.style.fontFamily, fontWeight: 400 }
         }
       ]
     }
