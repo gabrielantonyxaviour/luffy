@@ -1,11 +1,13 @@
 'use client';
 
 import { Container, Typography, Box, Button, Stack } from '@mui/material';
-import { Pitch } from '@/components';
+import { Pitch, SubmitSquad } from '@/components';
 import { useGeneralContext } from '@/contexts';
+import { useClientAuth } from '@/hooks';
 
 export default function GamePlay() {
-  const { setSquadGenerated } = useGeneralContext();
+  const { squadGenerated, setSquadGenerated } = useGeneralContext();
+  const { isAuthenticated } = useClientAuth();
 
   return (
     <Box>
@@ -23,13 +25,17 @@ export default function GamePlay() {
               width: '100%'
             }}
           >
-            <Button
-              variant='outlined'
-              color='warning'
-              onClick={() => setSquadGenerated(true)}
-            >
-              Autofill Squad
-            </Button>
+            <Stack direction='row' spacing={2}>
+              <Button
+                disabled={!isAuthenticated}
+                variant='outlined'
+                color='warning'
+                onClick={() => setSquadGenerated(true)}
+              >
+                Autofill Squad
+              </Button>
+              <SubmitSquad isDisabled={!isAuthenticated || !squadGenerated} />
+            </Stack>
           </Box>
         </Stack>
       </Container>
