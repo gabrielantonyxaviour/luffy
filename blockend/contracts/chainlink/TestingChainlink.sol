@@ -31,16 +31,11 @@ contract TestChainlink is FunctionsClient, ConfirmedOwner {
     bytes public s_lastError;
     uint32 public s_callbackGasLimit=300000;
     uint64 public s_subscriptionId;
-    address public i_link;
 
-    constructor(bytes32 _donId, address _functionsRouter, address _link, string memory _sourceCode, uint32 _subscriptionId)
+    constructor(address _functionsRouter)
         FunctionsClient(_functionsRouter) ConfirmedOwner(msg.sender) 
     {
-        sourceCode=_sourceCode;
         functionsRouter=_functionsRouter;
-        donId=_donId;
-        i_link=_link;
-        s_subscriptionId=_subscriptionId;
     }
 
     event OracleReturned(bytes32 indexed requestId, bytes response, bytes err);
@@ -56,7 +51,6 @@ contract TestChainlink is FunctionsClient, ConfirmedOwner {
     ) external onlyOwner {
         upkeepContract = _upkeepContract;
     }
-
 
     function updateRequest(
         bytes memory _request,
