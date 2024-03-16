@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Box, Container, Typography, Stack } from '@mui/material';
 import { Links } from './Links';
+import { DynamicWidget } from '@/components';
 
 const styles = {
   display: 'flex',
@@ -30,7 +31,9 @@ export const Header = () => {
           </Typography>
         </Stack>
         <Links pathname={pathname} />
-        <Typography>Avatar</Typography>
+        <Stack direction='row'>
+          <DynamicWidget />
+        </Stack>
       </Container>
     </Box>
   );

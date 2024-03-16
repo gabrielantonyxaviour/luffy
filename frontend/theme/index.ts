@@ -1,5 +1,6 @@
 'use client';
 
+import { buttonClasses } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { londrinaSolid, roboto } from '@/fonts';
 
@@ -8,12 +9,25 @@ export const theme = createTheme({
     mode: 'dark',
     background: {
       default: '#0A1620'
+    },
+    primary: {
+      main: '#fff'
     }
   },
   typography: {
     fontFamily: roboto.style.fontFamily
   },
   components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+          [`& .${buttonClasses.endIcon}`]: {
+            marginLeft: '5px'
+          }
+        }
+      }
+    },
     MuiTypography: {
       variants: [
         {
