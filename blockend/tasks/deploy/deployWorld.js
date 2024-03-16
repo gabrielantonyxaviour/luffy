@@ -1,6 +1,6 @@
 const { networks } = require("../../networks");
 
-task("deploy-world", "Deploys the WorldcoinVerifierTesting contract")
+task("deploy-world", "Deploys the WorldcoinVerifier contract")
   .addOptionalParam(
     "verify",
     "Set to true to verify contract",
@@ -9,7 +9,7 @@ task("deploy-world", "Deploys the WorldcoinVerifierTesting contract")
   )
   .setAction(async (taskArgs) => {
     console.log(
-      `Deploying WorldcoinVerifierTesting contract to ${network.name}`
+      `Deploying WorldcoinVerifier contract to ${network.name}`
     );
 
     console.log("\n__Compiling Contracts__");
@@ -22,7 +22,7 @@ task("deploy-world", "Deploys the WorldcoinVerifierTesting contract")
     ];
 
     const worldContractFactory = await ethers.getContractFactory(
-      "WorldcoinVerifierTesting"
+      "WorldcoinVerifier"
     );
     const worldContract = await worldContractFactory.deploy(...args);
 
@@ -39,7 +39,7 @@ task("deploy-world", "Deploys the WorldcoinVerifierTesting contract")
     );
 
     console.log(
-      "\nDeployed WorldcoinVerifierTesting contract to:",
+      "\nDeployed WorldcoinVerifier contract to:",
       worldContract.address
     );
 
@@ -78,6 +78,6 @@ task("deploy-world", "Deploys the WorldcoinVerifierTesting contract")
     }
 
     console.log(
-      `\n WorldcoinVerifierTesting contract deployed to ${worldContract.address} on ${network.name}`
+      `\n WorldcoinVerifier contract deployed to ${worldContract.address} on ${network.name}`
     );
   });

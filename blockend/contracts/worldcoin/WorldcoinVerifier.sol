@@ -6,7 +6,7 @@ pragma solidity ^0.8.0;
 import { ByteHasher } from './ByteHasher.sol';
 import {IWorldID} from "./IWorldID.sol";
 
-contract WorldcoinVerifierTesting{
+contract WorldcoinVerifier{
 
 /// @dev This allows us to use our hashToField function on bytes
 using ByteHasher for bytes;
