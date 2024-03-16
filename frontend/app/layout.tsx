@@ -3,7 +3,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { Container, CssBaseline } from '@mui/material';
 import type { Metadata } from 'next';
 import { theme } from '@/theme';
-import { Header } from '@/components';
+import { DynamicProvider, Header } from '@/components';
 
 export const metadata: Metadata = {
   title: 'Luffy',
@@ -20,11 +20,13 @@ export default function RootLayout({
     <html lang='en'>
       <body>
         <AppRouterCacheProvider>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <Header />
-            <Container maxWidth='xl'>{children}</Container>
-          </ThemeProvider>
+          <DynamicProvider>
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              <Header />
+              <Container maxWidth='xl'>{children}</Container>
+            </ThemeProvider>
+          </DynamicProvider>
         </AppRouterCacheProvider>
       </body>
     </html>
