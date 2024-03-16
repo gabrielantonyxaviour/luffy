@@ -1,9 +1,11 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, Container } from '@mui/material';
 
 export default function PlayerList() {
   return (
     <Box>
-      <Typography variant='h5'>Player List</Typography>
+      <Container maxWidth='lg' sx={{ marginY: 3 }}>
+        <Typography variant='h4'>Player List</Typography>
+      </Container>
     </Box>
   );
 }
