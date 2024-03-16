@@ -86,7 +86,7 @@ export const Player: React.FC<PlayerProps> = ({
 }) => {
   const imageSrc = isUnknown
     ? '/teams/avatar.png'
-    : `/teams/${nationality}.png`;
+    : `/teams/${nationality.toLowerCase()}.png`;
   const imageAlt = isUnknown ? 'player_unknown' : `player_${nationality}`;
 
   return (
