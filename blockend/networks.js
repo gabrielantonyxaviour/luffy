@@ -26,6 +26,7 @@ const networks = {
     chainId: 421614,
     confirmations: DEFAULT_VERIFICATION_BLOCK_CONFIRMATIONS,
     nativeCurrencySymbol: "ETH",
+    protocol: "0xdE6d2CaE1BA329c0a09c21Ac6Aa5958A7d355971",
   },
   chilizSpicy: {
     url: "https://spicy-rpc.chiliz.com/",
@@ -36,6 +37,7 @@ const networks = {
     chainId: 88882,
     confirmations: DEFAULT_VERIFICATION_BLOCK_CONFIRMATIONS,
     nativeCurrencySymbol: "CHZ",
+    rewards: "0xC3E60b8424274d30ec4e7D1f34C6b592fB1D9FC5",
   },
   ethereumSepolia: {
     url: process.env.SEPOLIA_RPC_URL || "UNSET",
