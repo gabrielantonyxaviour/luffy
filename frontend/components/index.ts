@@ -1,3 +1,4 @@
+export { CoinPicker } from './CoinPicker';
 export { DynamicProvider } from './DynamicProvider';
 export { DynamicWidget } from './DynamicWidget';
 export { EnsWidget } from './EnsWidget';
