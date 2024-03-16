@@ -1,9 +1,16 @@
-import { Box, Typography } from '@mui/material';
+import Image from 'next/image';
+import { Box, Container, Typography } from '@mui/material';
+import { Pitch } from '@/components';
 
 export default function GamePlay() {
   return (
     <Box>
-      <Typography variant='h5'>Game Play</Typography>
+      <Container maxWidth='lg' sx={{ marginTop: 3 }}>
+        <Typography variant='h4' marginBottom={3}>
+          Game Play
+        </Typography>
+        <Pitch />
+      </Container>
     </Box>
   );
 }
