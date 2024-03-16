@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Box, Button, Theme, Typography } from '@mui/material';
+import { Box, Button, Theme, Typography, Container } from '@mui/material';
 
 const styles = (theme: Theme) => ({
   container: {
@@ -27,13 +27,15 @@ const styles = (theme: Theme) => ({
 export const Hero = () => {
   return (
     <Box sx={(theme) => styles(theme).container}>
-      <Typography variant='h2'>Luffy</Typography>
-      <Typography variant='h4' sx={(theme) => styles(theme).subtext}>
-        The web3 game for all football fans!
-      </Typography>
-      <Link href='/gameplay'>
-        <Button variant='contained'>Play Now</Button>
-      </Link>
+      <Container maxWidth='xl'>
+        <Typography variant='h2'>Luffy</Typography>
+        <Typography variant='h4' sx={(theme) => styles(theme).subtext}>
+          The web3 game for all football fans!
+        </Typography>
+        <Link href='/gameplay'>
+          <Button variant='contained'>Play Now</Button>
+        </Link>
+      </Container>
     </Box>
   );
 };
