@@ -9,12 +9,12 @@ const {
   Location,
   CodeLanguage,
 } = require("@chainlink/functions-toolkit");
-const automatedFunctionsConsumerAbi = require("../build/artifacts/contracts/chainlink/TestingChainlink.sol/TestChainlink.json");
+const testChainlink = require("../build/artifacts/contracts/chainlink/TestChainlink.sol/TestChainlink.json");
 const ethers = require("ethers");
 const { networks } = require("../networks");
 require("@chainlink/env-enc").config();
 
-const testingChainlinkAddress = ""; // REPLACE this with your Functions consumer address
+const testingChainlinkAddress = "0xA8F191028D7319903d3F648E0f81A8E38Bb80B7D"; // REPLACE this with your Functions consumer address
 const subscriptionId = 37; // REPLACE this with your subscription ID
 
 const updateRequest = async () => {
@@ -89,7 +89,7 @@ const updateRequest = async () => {
   // First encrypt secrets and upload the encrypted secrets to the DON
   const secretsManager = new SecretsManager({
     signer: signer,
-    functionsRouterAddress: routerAddress,
+    functionsRouterAddress: functionsRouterAddress,
     donId: donId,
   });
   await secretsManager.initialize();
@@ -124,8 +124,8 @@ const updateRequest = async () => {
     }); // encode encrypted secrets version
 
   const automatedFunctionsConsumer = new ethers.Contract(
-    consumerAddress,
-    automatedFunctionsConsumerAbi,
+    testingChainlinkAddress,
+    testChainlink.abi,
     signer
   );
 

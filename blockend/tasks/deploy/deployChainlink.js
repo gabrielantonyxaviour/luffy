@@ -1,6 +1,6 @@
 const { networks } = require("../../networks");
 
-task("deploy-chainlink", "Deploys the TestingChainlink contract")
+task("deploy-chainlink", "Deploys the TestChainlink contract")
   .addOptionalParam(
     "verify",
     "Set to true to verify contract",
@@ -8,14 +8,14 @@ task("deploy-chainlink", "Deploys the TestingChainlink contract")
     types.boolean
   )
   .setAction(async (taskArgs) => {
-    console.log(`Deploying TestingChainlink contract to ${network.name}`);
+    console.log(`Deploying TestChainlink contract to ${network.name}`);
 
     console.log("\n__Compiling Contracts__");
     await run("compile");
-    const args = [""];
+    const args = ["0x234a5fb5Bd614a7AA2FfAB244D603abFA0Ac5C5C"];
 
     const testingContractFactory = await ethers.getContractFactory(
-      "TestingChainlink"
+      "TestChainlink"
     );
     const testingContract = await testingContractFactory.deploy(...args);
 
@@ -32,7 +32,7 @@ task("deploy-chainlink", "Deploys the TestingChainlink contract")
     );
 
     console.log(
-      "\nDeployed TestingChainlink contract to:",
+      "\nDeployed TestChainlink contract to:",
       testingContract.address
     );
 
@@ -71,6 +71,6 @@ task("deploy-chainlink", "Deploys the TestingChainlink contract")
     }
 
     console.log(
-      `\n TestingChainlink contract deployed to ${testingContract.address} on ${network.name}`
+      `\n TestChainlink contract deployed to ${testingContract.address} on ${network.name}`
     );
   });
