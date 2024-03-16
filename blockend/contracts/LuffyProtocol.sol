@@ -7,7 +7,6 @@ error InvalidGameweek(uint256 gameweek);
 error SelectSquadDisabled(uint256 gameweek);
 error WorldCoinVerificationFailed(address signal, uint256 root, uint256 nullifierHash, uint256[8] proof);
 
-
 contract LuffyProtocol {
 
     address public owner;
@@ -69,7 +68,6 @@ contract LuffyProtocol {
         }
         gameWeekToSquadHash[_gameWeek][_wrldProof.nullifierHash] = _squadHash;
         emit SquadRegistered(_gameWeek, _wrldProof.signal, _wrldProof.nullifierHash, _squadHash);
-
     }
 
     function verifyWorldcoin(WorldcoinProofInput memory _wrldProof) public returns(bool) {
@@ -79,7 +77,6 @@ contract LuffyProtocol {
         } catch {
             return false;
         }
-      
     }
 
 

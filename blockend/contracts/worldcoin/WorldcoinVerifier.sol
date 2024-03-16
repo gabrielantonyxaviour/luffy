@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 
 
 import { ByteHasher } from './ByteHasher.sol';
-import {IWorldID} from "./IWorldID.sol";
+import {IWorldID} from "./interface/IWorldID.sol";
 
 contract WorldcoinVerifier{
 
