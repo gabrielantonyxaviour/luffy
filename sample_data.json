@@ -27,8 +27,8 @@
     "position": "DEF",
     "nationality": "Scotland",
     "fixture": "England",
-    "xPos": "30%",
-    "yPos": 240,
+    "xPos": "85%",
+    "yPos": 370,
     "statistics": {
       "minutesPlayed": "90",
       "tackles": "3",
@@ -75,8 +75,8 @@
     "position": "DEF",
     "nationality": "England",
     "fixture": "Scotland",
-    "xPos": "15%",
-    "yPos": 370,
+    "xPos": "30%",
+    "yPos": 240,
     "statistics": {
       "minutesPlayed": "90",
       "tackles": "2",
@@ -95,11 +95,11 @@
   },
   {
     "id": "5",
-    "name": "Trent Alexander-Arnold",
+    "name": "Trent Arnold",
     "position": "DEF",
     "nationality": "England",
     "fixture": "Scotland",
-    "xPos": "85%",
+    "xPos": "15%",
     "yPos": 370,
     "statistics": {
       "minutesPlayed": "90",
@@ -123,8 +123,8 @@
     "position": "MID",
     "nationality": "Belgium",
     "fixture": "France",
-    "xPos": "25%",
-    "yPos": 480,
+    "xPos": "50%",
+    "yPos": 570,
     "statistics": {
       "minutesPlayed": "90",
       "tackles": "2",
@@ -171,8 +171,9 @@
     "position": "MID",
     "nationality": "Spain",
     "fixture": "Netherlands",
-    "xPos": "50%",
-    "yPos": 570,
+
+    "xPos": "25%",
+    "yPos": 480,
     "statistics": {
       "minutesPlayed": "90",
       "tackles": "2",
@@ -195,7 +196,8 @@
     "position": "FWD",
     "nationality": "Portugal",
     "fixture": "Germany",
-    "xPos": "15%",
+
+    "xPos": "85%",
     "yPos": 630,
     "statistics": {
       "minutesPlayed": "90",
@@ -216,8 +218,9 @@
     "position": "FWD",
     "nationality": "Denmark",
     "fixture": "Italy",
-    "xPos": "85%",
-    "yPos": 630,
+
+    "xPos": "50%",
+    "yPos": 720,
     "statistics": {
       "minutesPlayed": "90",
       "shots": "5",
@@ -237,8 +240,8 @@
     "position": "FWD",
     "nationality": "France",
     "fixture": "Belgium",
-    "xPos": "50%",
-    "yPos": 720,
+    "xPos": "15%",
+    "yPos": 630,
     "statistics": {
       "minutesPlayed": "90",
       "shots": "5",
