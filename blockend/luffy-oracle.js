@@ -1,8 +1,19 @@
+const {
+  keccak256,
+  encodePacked,
+  encodeAbiParameters,
+  parseAbiParameters,
+  hexToBytes,
+} = await import("npm:viem");
 const gameWeek = args[0];
+
+if (secrets.apiKey == "") {
+  throw Error("PINATA_API_KEY environment variable not set for Pinata API.");
+}
 
 const weightage = {
   ALL: {
-    minutesPlayed: 0.1,
+    minutesPlayed: 0.05,
     yellowCard: -2,
     redCard: -5,
     ownGoal: -5,
@@ -16,7 +27,7 @@ const weightage = {
     saves: 1,
     cleanSheet: 5,
     penaltySaved: 6,
-    passingAccuracy: 1,
+    passingAccuracy: 0.3,
     goalsConceded: -2,
     goalsScored: 10,
     assists: 6,
@@ -27,7 +38,7 @@ const weightage = {
     interceptions: 2,
     clearances: 1,
     blocks: 2,
-    passingAccuracy: 1,
+    passingAccuracy: 0.1,
     dribblesCompleted: 2,
     goalsScored: 6,
     assists: 4,
@@ -37,19 +48,56 @@ const weightage = {
     assists: 2,
     tackles: 2,
     interceptions: 2,
-    passingAccuracy: 0.3,
+    passingAccuracy: 0.2,
   },
   FWD: {
     goalsScored: 1,
     assists: 2,
     tackles: 1,
     interceptions: 1,
-    shootingAccuracy: 0.4,
-    passingAccuracy: 0.2,
+    shootingAccuracy: 0.1,
+    passingAccuracy: 0.05,
     shotsOnTarget: 1,
     shots: 0.1,
   },
 };
+
+function computeMerkleRoot(points) {
+  const hashedValues = points.map((point) =>
+    keccak256(`0x${point.toString(16)}`)
+  );
+
+  function recursiveMerkleRoot(hashes) {
+    if (hashes.length === 1) {
+      return hashes[0];
+    }
+
+    const nextLevelHashes = [];
+
+    // Combine adjacent hashes and hash them together
+    for (let i = 0; i < hashes.length; i += 2) {
+      const left = hashes[i];
+      const right = i + 1 < hashes.length ? hashes[i + 1] : "0x";
+      const combinedHash = keccak256(
+        encodePacked(["bytes32", "bytes32"], [left, right])
+      );
+      nextLevelHashes.push(combinedHash);
+    }
+
+    // Recur for the next level
+    return recursiveMerkleRoot(nextLevelHashes);
+  }
+
+  // Start the recursive computation
+  return recursiveMerkleRoot(hashedValues);
+}
+
+function padArrayWithZeros(array) {
+  const paddedLength = Math.pow(2, Math.ceil(Math.log2(array.length)));
+  return array.concat(
+    Array.from({ length: paddedLength - array.length }, () => 0)
+  );
+}
 
 // In future, we will use multiple Sports APIs to get the player performance data
 // and perform aggregation to generate the points of the players.
@@ -184,28 +232,38 @@ if (!playerPerformaceResponse.error) {
       );
     }
     points.push(playerPoints);
-    const playerPerformaceRequest = Functions.makeHttpRequest({
-      url: `https://luffy-eight.vercel.app/api/merkleroot`,
-      method: "POST",
-      data: {
-        points: points,
-      },
-    });
-
-    // const [playerPerformaceResponse] = await Promise.all([playerPerformaceRequest])
-    // if (playerPerformaceResponse.error) {
-    //   console.log("Error in updating points")
-    // } else {
-    //   console.log("Points updated successfully")
-    // }
   }
 } else {
 }
-// The source code MUST return a Buffer or the request will return an error message
-// Use one of the following functions to convert to a Buffer representing the response bytes that are returned to the consumer smart contract:
-// - Functions.encodeUint256
-// - Functions.encodeInt256
-// - Functions.encodeString
-// Or return a custom Buffer for a custom byte encoding
+
 console.log(points);
-return Functions.encodeString("Success");
+
+const pinFileToPinataRequest = Functions.makeHttpRequest({
+  url: `https://api.pinata.cloud/pinning/pinJSONToIPFS`,
+  method: "POST",
+  headers: {
+    Authorization: `Bearer ${secrets.apiKey}`,
+    "Content-Type": "application/json",
+  },
+  data: {
+    pinataMetadata: {
+      name: "Gameweeek" + gameWeek,
+    },
+    pinataContent: {
+      points: points,
+    },
+  },
+});
+
+const [pinFileToPinataResponse] = await Promise.all([pinFileToPinataRequest]);
+
+console.log(pinFileToPinataResponse);
+const merkleRoot = computeMerkleRoot(padArrayWithZeros(points));
+console.log(merkleRoot);
+const returnDataHex = encodeAbiParameters(
+  parseAbiParameters("bytes32, string"),
+  [merkleRoot, pinFileToPinataResponse.data.IpfsHash]
+);
+console.log(returnDataHex);
+
+return hexToBytes(returnDataHex);
