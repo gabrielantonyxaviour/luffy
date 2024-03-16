@@ -1,6 +1,15 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.10;
 
+
+struct WorldcoinProofInput {
+    address signal;
+    uint256 root;
+    uint256 nullifierHash;
+    uint256[8] proof;
+}
+
+
 interface IWorldcoinVerifier {
 /// @param signal An arbitrary input from the user that cannot be tampered with. In this case, it is the user's wallet address.
 /// @param root The root (returned by the IDKit widget).
