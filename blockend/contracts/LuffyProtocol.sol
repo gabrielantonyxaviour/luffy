@@ -101,9 +101,9 @@ contract LuffyProtocol {
 
     // Noir playground
     event ProofVerificationSuccess();
-    function testNoir(WorldcoinProofInput memory _wrldProof, bytes calldata _proof) public{
+    function testNoir(uint256 _nullifierHash, bytes calldata _proof) public{
         bytes32[] memory _publicInputs=new bytes32[](2);
-        _publicInputs[0]=gameWeekToSquadHash[gameweekCounter][_wrldProof.nullifierHash];
+        _publicInputs[0]=gameWeekToSquadHash[gameweekCounter][_nullifierHash];
         _publicInputs[1]=pointsMerkleRoot[gameweekCounter];
         try zkVerifier.verify(_proof, _publicInputs)
         {
@@ -113,34 +113,48 @@ contract LuffyProtocol {
         }
     }
 
-    // Hyperlane Playground
-    event SentPing(bytes32 indexed messageId, uint32 indexed destinationChain, address indexed destinationAddress, uint256 fee, bytes message);
-    event ReceivedPong(bytes32 indexed messageId, uint32 indexed originChain, address indexed senderAddress, string message); 
-    function pingHyperlane(uint32 destinationDomain, bytes32 recepientAddress, string memory message) public payable{
+    // // Hyperlane Playground
+    // event SentPing(bytes32 indexed messageId, uint32 indexed destinationChain, address indexed destinationAddress, uint256 fee, bytes message);
+    // event ReceivedPong(bytes32 indexed messageId, uint32 indexed originChain, address indexed senderAddress, string message); 
+    // function pingHyperlane(uint32 destinationDomain, bytes32 recepientAddress, string memory message) public payable{
 
-        uint256 _requiredFee = mailbox.quoteDispatch(destinationDomain, recepientAddress, bytes(message));
-        if(msg.value < _requiredFee) revert InadequateCrosschainFee(destinationDomain, _requiredFee, msg.value);
+    //     uint256 _requiredFee = mailbox.quoteDispatch(destinationDomain, recepientAddress, bytes(message));
+    //     if(msg.value < _requiredFee) revert InadequateCrosschainFee(destinationDomain, _requiredFee, msg.value);
 
-        bytes32 messageId = mailbox.dispatch{value: msg.value}(destinationDomain,recepientAddress, abi.encode(message));
-        emit SentPing(messageId, destinationDomain, bytes32ToAddress(recepientAddress), msg.value, abi.encode(message));
-    }
+    //     bytes32 messageId = mailbox.dispatch{value: msg.value}(destinationDomain,recepientAddress, abi.encode(message));
+    //     emit SentPing(messageId, destinationDomain, bytes32ToAddress(recepientAddress), msg.value, abi.encode(message));
+    // }
 
-    function handle(uint32 _origin,bytes32 _sender,bytes calldata _message) external payable onlyMailbox{
-        _pongHyperlane(_origin, _sender, bytes32(0), _message);
-    }
+    // function handle(uint32 _origin,bytes32 _sender,bytes calldata _message) external payable onlyMailbox{
+    //     _pongHyperlane(_origin, _sender, bytes32(0), _message);
+    // }
 
-    function _pongHyperlane(uint32 originDomain, bytes32 senderAddress, bytes32 messageId, bytes memory message) internal{
-        emit ReceivedPong(messageId, originDomain, bytes32ToAddress(senderAddress), abi.decode(message, (string)));
-    }
+    // function _pongHyperlane(uint32 originDomain, bytes32 senderAddress, bytes32 messageId, bytes memory message) internal{
+    //     emit ReceivedPong(messageId, originDomain, bytes32ToAddress(senderAddress), abi.decode(message, (string)));
+    // }
 
-    function bytes32ToAddress(bytes32 _buf) internal pure returns (address) {
-        return address(uint160(uint256(_buf)));
-    }
+    // function bytes32ToAddress(bytes32 _buf) internal pure returns (address) {
+    //     return address(uint160(uint256(_buf)));
+    // }
 
-    function getQuote(uint32 destinationDomain, bytes32 recepientAddress, string memory message) public view returns(uint256){
-        return mailbox.quoteDispatch(destinationDomain, recepientAddress, bytes(message));
-    }
+    // function getQuote(uint32 destinationDomain, bytes32 recepientAddress, string memory message) public view returns(uint256){
+    //     return mailbox.quoteDispatch(destinationDomain, recepientAddress, bytes(message));
+    // }
     
+
+    // Testing helpers
+
+    function setSelectSquadEnabled(bool _isSelectSquadEnabled) public onlyOwner {
+        isSelectSquadEnabled = _isSelectSquadEnabled;
+    }
+
+    function setGameweekCounter(uint256 _gameweekCounter) public onlyOwner {
+        gameweekCounter = _gameweekCounter;
+    }
+
+    function setPointsMerkleRoot(uint256 _gameweek, bytes32 _pointsMerkleRoot) public onlyOwner {
+        pointsMerkleRoot[_gameweek] = _pointsMerkleRoot;
+    }
     
 }
 
