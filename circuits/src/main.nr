@@ -18,26 +18,26 @@ fn main(
         concatenate_player_ids_with_salt(squad_player_ids, squad_secret),
         43
     );
+    assert(computed_player_ids_hash == squad_hash);
+    // verify ECDSA signature
+    let computedAddress: Field = ecrecover::secp256k1::PubKey::from_xy(signer_pub_x_key, signer_pub_y_key).to_eth_address(); // Compute address from public key
+    let recoveredAddress = ecrecover::ecrecover(
+        signer_pub_x_key,
+        signer_pub_y_key,
+        signature,
+        computed_player_ids_hash
+    );
+    assert(recoveredAddress == computedAddress);
+    // verify the merkle path of the point to confirm that is actually the points of the player
+    for i in squad_player_ids {
+        let computed_root= compute_merkle_root(
+            squad_points[i], // leaf
+            squad_player_ids[i], // index
+            player_points_merkle_paths[i] // merkle proof
+        );
+        assert(computed_root == player_points_root);
+    }
     computed_player_ids_hash
-    // assert(computed_player_ids_hash == squad_hash);
-    // // verify ECDSA signature
-    // let computedAddress: Field = ecrecover::secp256k1::PubKey::from_xy(signer_pub_x_key, signer_pub_y_key).to_eth_address(); // Compute address from public key
-    // let recoveredAddress = ecrecover::ecrecover(
-    //     signer_pub_x_key,
-    //     signer_pub_y_key,
-    //     signature,
-    //     computed_player_ids_hash
-    // );
-    // assert(recoveredAddress == computedAddress);
-    // // verify the merkle path of the point to confirm that is actually the points of the player
-    // for i in squad_player_ids {
-    //     let computed_root= compute_merkle_root(
-    //         squad_points[i], // leaf
-    //         squad_player_ids[i], // index
-    //         player_points_merkle_paths[i] // merkle proof
-    //     );
-    //     assert(computed_root == player_points_root);
-    // }
     // // sum all points and return it back to the contract
     // let mut totalPoints: u8= 0;
     // for point in squad_points {

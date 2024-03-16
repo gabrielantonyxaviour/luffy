@@ -1,6 +1,6 @@
 require("@chainlink/env-enc").config();
 
-const DEFAULT_VERIFICATION_BLOCK_CONFIRMATIONS = 3;
+const DEFAULT_VERIFICATION_BLOCK_CONFIRMATIONS = 5;
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 
@@ -32,7 +32,7 @@ const networks = {
     gasPrice: undefined,
     nonce: undefined,
     accounts,
-    verifyApiKey: "UNSET",
+    verifyApiKey: "fksnfjksn",
     chainId: 88882,
     confirmations: DEFAULT_VERIFICATION_BLOCK_CONFIRMATIONS,
     nativeCurrencySymbol: "CHZ",

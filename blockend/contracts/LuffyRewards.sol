@@ -12,7 +12,6 @@ error InvalidTokenAmount(uint256 _amount);
 error TokenNotApproved(uint256 _amount);
 error InadequateCrosschainFee(uint32 destinationDomain, uint256 requiredFee, uint256 sentFee);
 
-
 contract LuffyRewards {
 
     address public owner;
