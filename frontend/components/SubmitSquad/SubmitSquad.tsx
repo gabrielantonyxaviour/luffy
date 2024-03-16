@@ -17,7 +17,13 @@ const unpack = (proof: `0x${string}`) => {
   return decodeAbiParameters([{ type: 'uint256[8]' }], proof)[0];
 };
 
-export const SubmitSquad = () => {
+type SubmitSquadProps = {
+  isDisabled: boolean;
+};
+
+export const SubmitSquad: React.FC<SubmitSquadProps> = ({
+  isDisabled = true
+}) => {
   const { setOpen } = useIDKit();
   const { enqueueSnackbar } = useSnackbar();
   const { primaryWallet } = useDynamicContext();
@@ -48,8 +54,8 @@ export const SubmitSquad = () => {
         verification_level={VerificationLevel.Orb}
       />
       <Button
+        disabled={isDisabled}
         variant='outlined'
-        color='warning'
         startIcon={<Worldcoin />}
         onClick={() => setOpen(true)}
       >
