@@ -8,10 +8,13 @@ const { Provider } = GeneralContext;
 
 export const GeneralProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [ens, setEns] = useState('');
+  const [squadSubmitted, setSquadSubmitted] = useState(false);
 
   const providerValue: GeneralContextType = {
     ens,
-    setEns
+    setEns,
+    squadSubmitted,
+    setSquadSubmitted
   };
 
   return <Provider value={providerValue}>{children}</Provider>;
