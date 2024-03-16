@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.10;
 
 import "./worldcoin/interface/IWorldcoinVerifier.sol";
@@ -26,6 +27,7 @@ contract LuffyProtocol {
 
     constructor(IMailbox _mailbox, IWorldcoinVerifier _worldcoinVerifier, string[] memory _playersMetadata)
     {
+        mailbox = _mailbox;
         worldcoinVerifier = _worldcoinVerifier;
         isSelectSquadEnabled = true;
         gameweekCounter = 1;
@@ -105,7 +107,6 @@ contract LuffyProtocol {
     function _pongHyperlane(uint32 originDomain, bytes32 senderAddress, bytes32 messageId, bytes memory message) internal{
         emit ReceivedPong(messageId, originDomain, bytes32ToAddress(senderAddress), abi.decode(message, (string)));
     }
-
 
     function bytes32ToAddress(bytes32 _buf) internal pure returns (address) {
         return address(uint160(uint256(_buf)));
