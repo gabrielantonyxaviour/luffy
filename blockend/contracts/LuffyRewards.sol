@@ -46,22 +46,32 @@ contract LuffyRewards {
         _;
     }
 
-    function betAmount(uint256 _gameWeek, uint256 _tokenAmount) public {
-        if(_tokenAmount > 0) revert InvalidTokenAmount(_tokenAmount);
+    function betAmount(uint256 _gameWeek, uint256 _amount) public {
+        if(_amount > 0) revert InvalidTokenAmount(_amount);
         if(_gameWeek!=gameWeekCounter+1) revert InvalidGameweek(_gameWeek);
-        if(REWARD_TOKEN_ADDRESS.allowance(msg.sender, address(this)) < _tokenAmount) revert TokenNotApproved(_tokenAmount);   
-        REWARD_TOKEN_ADDRESS.transferFrom(msg.sender, address(this), _tokenAmount);
-        playerToBetAmounts[msg.sender] += _tokenAmount;
+        if(address(REWARD_TOKEN_ADDRESS) != address(0))
+        {
+            if(REWARD_TOKEN_ADDRESS.allowance(msg.sender, address(this)) < _amount) revert TokenNotApproved(_amount);   
+            REWARD_TOKEN_ADDRESS.transferFrom(msg.sender, address(this), _amount);
+        } else{
+            payable(address(this)).transfer(_amount);
+        }
+        playerToBetAmounts[msg.sender] += _amount;
         
-        emit BetPlaced(_gameWeek, msg.sender, _tokenAmount);
+        emit BetPlaced(_gameWeek, msg.sender, _amount);
     }
 
-    function _claimRewards(uint256 _gameWeek, uint256 _tokenAmount, address receiver) internal returns(bool)
+    function _claimRewards(uint256 _gameWeek, uint256 _amount, address receiver) internal returns(bool)
     {
         if(_gameWeek>gameWeekCounter) gameWeekCounter = _gameWeek; 
-        playerToRewardAmounts[receiver] += _tokenAmount;
-        REWARD_TOKEN_ADDRESS.transfer(receiver, _tokenAmount);
-        emit RewardsClaimed(_gameWeek, receiver, _tokenAmount);
+        playerToRewardAmounts[receiver] += _amount;
+        if(address(REWARD_TOKEN_ADDRESS) != address(0))
+        {
+            REWARD_TOKEN_ADDRESS.transfer(receiver, _amount);
+        } else{
+            payable(receiver).transfer(_amount);
+        }
+        emit RewardsClaimed(_gameWeek, receiver, _amount);
         return true;
     }
     
