@@ -14,6 +14,7 @@ export default function Home() {
                 width: '50%',
                 height: '400px',
                 backgroundImage: `url('/champions.png')`,
+                border: '1px solid #ffffff11',
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition: 'center',
                 backgroundSize: 'cover',

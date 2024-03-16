@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import Image from 'next/image';
 import { Box, Typography, Button } from '@mui/material';
 
@@ -5,7 +6,8 @@ const styles = {
   container: {
     width: '240px',
     minWidth: '240px',
-    backgroundColor: '#123',
+    backgroundColor: '#0c1e33',
+    border: '1px solid #ffffff11',
     padding: 5,
     display: 'flex',
     flexDirection: 'column',
@@ -29,9 +31,11 @@ export const PlayerCard: React.FC<PlayerCardProps> = ({ name, position }) => {
       <Typography variant='body2' marginBottom={2}>
         {position}
       </Typography>
-      <Button variant='outlined' color='warning'>
-        Change Player
-      </Button>
+      <Link href='gameplay'>
+        <Button variant='outlined' color='warning'>
+          Change Player
+        </Button>
+      </Link>
     </Box>
   );
 };
