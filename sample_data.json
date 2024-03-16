@@ -18,7 +18,9 @@
       "redCards": "0",
       "goals": "0",
       "assists": "0",
-      "passingAccuracy": "80"
+      "passingAccuracy": "80",
+      "ownGoals": "0",
+      "penaltiesMissed": "0"
     }
   },
   {
