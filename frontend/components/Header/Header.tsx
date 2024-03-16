@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Box, Container, Typography, Stack } from '@mui/material';
 import { Links } from './Links';
-import { DynamicWidget, EnsWidget } from '@/components';
+import { CoinPicker, DynamicWidget, EnsWidget } from '@/components';
 
 const styles = {
   display: 'flex',
@@ -31,6 +31,7 @@ export const Header = () => {
           </Typography>
         </Stack>
         <Links pathname={pathname} />
+        <CoinPicker />
         <Stack direction='row' alignItems='center' spacing={1.5}>
           <EnsWidget />
           <DynamicWidget />
