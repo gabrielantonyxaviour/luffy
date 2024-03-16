@@ -28,7 +28,7 @@ export default function GamePlay() {
               color='warning'
               onClick={() => setSquadGenerated(true)}
             >
-              Generate Squad
+              Autofill Squad
             </Button>
           </Box>
         </Stack>
