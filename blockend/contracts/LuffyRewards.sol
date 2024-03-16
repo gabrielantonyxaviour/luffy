@@ -83,8 +83,8 @@ contract LuffyRewards {
         uint256 _requiredFee = mailbox.quoteDispatch(destinationDomain, recepientAddress, bytes(message));
         if(msg.value < _requiredFee) revert InadequateCrosschainFee(destinationDomain, _requiredFee, msg.value);
 
-        bytes32 messageId = mailbox.dispatch{value: msg.value}(destinationDomain,recepientAddress,bytes("Hello, world"));
-        emit SentPing(messageId, destinationDomain, bytes32ToAddress(recepientAddress), msg.value, bytes(message));
+               bytes32 messageId = mailbox.dispatch{value: msg.value}(destinationDomain,recepientAddress, abi.encode(message));
+        emit SentPing(messageId, destinationDomain, bytes32ToAddress(recepientAddress), msg.value, abi.encode(message));
     }
 
     function handle(uint32 _origin,bytes32 _sender,bytes calldata _message) external payable onlyMailbox{
@@ -99,6 +99,9 @@ contract LuffyRewards {
         return address(uint160(uint256(_buf)));
     }
 
+    function getQuote(uint32 destinationDomain, bytes32 recepientAddress, string memory message) public view returns(uint256){
+        return mailbox.quoteDispatch(destinationDomain, recepientAddress, bytes(message));
+    }
 
 }
 

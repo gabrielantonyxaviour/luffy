@@ -8,15 +8,13 @@ task("deploy-world", "Deploys the WorldcoinVerifier contract")
     types.boolean
   )
   .setAction(async (taskArgs) => {
-    console.log(
-      `Deploying WorldcoinVerifier contract to ${network.name}`
-    );
+    console.log(`Deploying WorldcoinVerifier contract to ${network.name}`);
 
     console.log("\n__Compiling Contracts__");
     await run("compile");
 
     const args = [
-      "0x469449f251692e0779667583026b5a1e99512157",
+      "0x42FF98C4E85212a5D31358ACbFe76a621b50fC02",
       "app_staging_869452b514c58770aaa9dcb5dacfafac",
       "luffy",
     ];
