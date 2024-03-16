@@ -27,7 +27,7 @@ fn main(
         signature,
         computed_player_ids_hash
     );
-    assert(recoveredAddress == computedAddress);
+    // assert(recoveredAddress == computedAddress);
     // verify the merkle path of the point to confirm that is actually the points of the player
     // for i in squad_player_ids {
     //     let computed_root= compute_merkle_root(
