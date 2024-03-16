@@ -225,8 +225,8 @@
     "yPos": 720,
     "statistics": {
       "minutesPlayed": "90",
-      "shots": "5",
-      "shotsOnTarget": "3",
+      "shots": "1",
+      "shotsOnTarget": "2",
       "shootingAccuracy": "60",
       "fouls": "1",
       "yellowCards": "0",
@@ -246,7 +246,7 @@
     "yPos": 630,
     "statistics": {
       "minutesPlayed": "90",
-      "shots": "5",
+      "shots": "3",
       "shotsOnTarget": "3",
       "shootingAccuracy": "60",
       "fouls": "1",
