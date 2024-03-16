@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { Box, Container, Typography, Stack } from '@mui/material';
 import { Hero, Section, PlayerCard, Sponsors } from '@/components';
+import { players } from '@/data';
 
 export default function Home() {
   return (
@@ -43,12 +44,14 @@ export default function Home() {
         </Section>
         <Section title='Squad'>
           <Stack direction='row' spacing={5} sx={{ overflowY: 'scroll' }}>
-            <PlayerCard name='Benjamin Pavard' position='Defender' />
-            <PlayerCard name='Harry Kane' position='Forward' />
-            <PlayerCard name='Kai Havertz' position='Goalkeeper' />
-            <PlayerCard name='David Raya' position='Defender' />
-            <PlayerCard name='David Raya' position='Defender' />
-            <PlayerCard name='David Raya' position='Defender' />
+            {players.map(({ id, name, position, nationality }) => (
+              <PlayerCard
+                key={id}
+                name={name}
+                position={position}
+                nationality={nationality}
+              />
+            ))}
           </Stack>
         </Section>
         <Section title='Powered By'>

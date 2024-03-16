@@ -5,6 +5,8 @@
     "position": "GK",
     "nationality": "Belgium",
     "fixture": "France",
+    "xPos": "50%",
+    "yPos": 80,
     "statistics": {
       "minutesPlayed": "90",
       "saves": "3",
@@ -25,6 +27,8 @@
     "position": "DEF",
     "nationality": "Scotland",
     "fixture": "England",
+    "xPos": "85%",
+    "yPos": 370,
     "statistics": {
       "minutesPlayed": "90",
       "tackles": "3",
@@ -47,6 +51,8 @@
     "position": "DEF",
     "nationality": "Netherlands",
     "fixture": "Spain",
+    "xPos": "70%",
+    "yPos": 240,
     "statistics": {
       "minutesPlayed": "90",
       "tackles": "2",
@@ -69,6 +75,8 @@
     "position": "DEF",
     "nationality": "England",
     "fixture": "Scotland",
+    "xPos": "30%",
+    "yPos": 240,
     "statistics": {
       "minutesPlayed": "90",
       "tackles": "2",
@@ -87,10 +95,12 @@
   },
   {
     "id": "5",
-    "name": "Trent Alexander-Arnold",
+    "name": "Trent Arnold",
     "position": "DEF",
     "nationality": "England",
     "fixture": "Scotland",
+    "xPos": "15%",
+    "yPos": 370,
     "statistics": {
       "minutesPlayed": "90",
       "tackles": "2",
@@ -113,6 +123,8 @@
     "position": "MID",
     "nationality": "Belgium",
     "fixture": "France",
+    "xPos": "50%",
+    "yPos": 570,
     "statistics": {
       "minutesPlayed": "90",
       "tackles": "2",
@@ -135,6 +147,8 @@
     "position": "MID",
     "nationality": "England",
     "fixture": "Scotland",
+    "xPos": "75%",
+    "yPos": 480,
     "statistics": {
       "minutesPlayed": "90",
       "tackles": "2",
@@ -157,6 +171,9 @@
     "position": "MID",
     "nationality": "Spain",
     "fixture": "Netherlands",
+
+    "xPos": "25%",
+    "yPos": 480,
     "statistics": {
       "minutesPlayed": "90",
       "tackles": "2",
@@ -179,6 +196,9 @@
     "position": "FWD",
     "nationality": "Portugal",
     "fixture": "Germany",
+
+    "xPos": "85%",
+    "yPos": 630,
     "statistics": {
       "minutesPlayed": "90",
       "shots": "5",
@@ -196,8 +216,11 @@
     "id": "10",
     "name": "Erling Haaland",
     "position": "FWD",
-    "nationality": "Norway",
+    "nationality": "Denmark",
     "fixture": "Italy",
+
+    "xPos": "50%",
+    "yPos": 720,
     "statistics": {
       "minutesPlayed": "90",
       "shots": "5",
@@ -217,6 +240,8 @@
     "position": "FWD",
     "nationality": "France",
     "fixture": "Belgium",
+    "xPos": "15%",
+    "yPos": 630,
     "statistics": {
       "minutesPlayed": "90",
       "shots": "5",
