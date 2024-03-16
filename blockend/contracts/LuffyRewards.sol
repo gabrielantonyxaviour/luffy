@@ -27,7 +27,7 @@ contract LuffyRewards {
     constructor(IMailbox _mailbox, string memory _rewardToken, IERC20 _rewardTokenAddress)
     {
         mailbox = _mailbox;
-        REWARD_TOKEN = keccak256(_rewardToken);
+        REWARD_TOKEN = keccak256(abi.encodePacked(_rewardToken));
         REWARD_TOKEN_ADDRESS = _rewardTokenAddress;
         gameWeekCounter=0;
         owner=msg.sender;

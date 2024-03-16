@@ -15,16 +15,28 @@ if (SECOND_PRIVATE_KEY) {
 }
 
 const networks = {
-  // scrollSepolia: {
-  //   url: "https://sepolia-rpc.scroll.io",
-  //   gasPrice: undefined,
-  //   nonce: undefined,
-  //   accounts,
-  //   verifyApiKey: process.env.SCROLL_API_KEY || "UNSET",
-  //   chainId: 534351,
-  //   confirmations: DEFAULT_VERIFICATION_BLOCK_CONFIRMATIONS,
-  //   nativeCurrencySymbol: "ETH",
-  // },
+  arbitrumSepolia: {
+    url:
+      "https://arb-sepolia.g.alchemy.com/v2/" +
+      process.env.ALCHEMY_API_KEY_ARBITRUM,
+    gasPrice: undefined,
+    nonce: undefined,
+    accounts,
+    verifyApiKey: process.env.ARBISCAN_API_KEY || "UNSET",
+    chainId: 421614,
+    confirmations: DEFAULT_VERIFICATION_BLOCK_CONFIRMATIONS,
+    nativeCurrencySymbol: "ETH",
+  },
+  chilizSpicy: {
+    url: "https://spicy-rpc.chiliz.com/",
+    gasPrice: undefined,
+    nonce: undefined,
+    accounts,
+    verifyApiKey: "UNSET",
+    chainId: 88882,
+    confirmations: DEFAULT_VERIFICATION_BLOCK_CONFIRMATIONS,
+    nativeCurrencySymbol: "CHZ",
+  },
   ethereumSepolia: {
     url: process.env.SEPOLIA_RPC_URL || "UNSET",
     gasPrice: undefined,

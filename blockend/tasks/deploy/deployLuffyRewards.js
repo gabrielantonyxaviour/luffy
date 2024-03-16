@@ -1,6 +1,6 @@
 const { networks } = require("../../networks");
 
-task("deploy-protocol", "Deploys the LuffyRewards contract")
+task("deploy-rewards", "Deploys the LuffyRewards contract")
   .addOptionalParam(
     "verify",
     "Set to true to verify contract",
