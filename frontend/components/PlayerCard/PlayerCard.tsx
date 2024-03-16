@@ -16,20 +16,37 @@ const styles = {
   }
 };
 
+const positionMap = {
+  GK: 'Goalkeeper',
+  DEF: 'Defender',
+  MID: 'Midfielder',
+  FWD: 'Forward'
+};
+
 type PlayerCardProps = {
   name: string;
   position: string;
+  nationality: string;
 };
 
-export const PlayerCard: React.FC<PlayerCardProps> = ({ name, position }) => {
+export const PlayerCard: React.FC<PlayerCardProps> = ({
+  name,
+  position,
+  nationality
+}) => {
   return (
     <Box sx={styles.container}>
-      <Image src='/bank.png' alt='player' width={120} height={120} />
+      <Image
+        src={`/teams/${nationality?.toLowerCase()}.png`}
+        alt='player'
+        width={100}
+        height={120}
+      />
       <Typography variant='h6' marginTop={2}>
         {name}
       </Typography>
       <Typography variant='body2' marginBottom={2}>
-        {position}
+        {positionMap[position as keyof typeof positionMap]}
       </Typography>
       <Link href='gameplay'>
         <Button variant='outlined' color='warning'>

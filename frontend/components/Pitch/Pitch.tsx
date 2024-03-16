@@ -1,16 +1,6 @@
 import { Box } from '@mui/material';
 import { Player } from './Player';
-import data from '../../../sample_data.json';
-
-type PlayerType = {
-  id: string;
-  name: string;
-  xPos: string;
-  yPos: number;
-  nationality: string;
-};
-
-const players = data as PlayerType[];
+import { players } from '@/data';
 
 const styles = {
   container: {
