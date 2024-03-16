@@ -3,7 +3,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 import type { Metadata } from 'next';
 import { theme } from '@/theme';
-import { DynamicProvider, Header } from '@/components';
+import { DynamicProvider, Header, SubmitEnsDialog } from '@/components';
 
 export const metadata: Metadata = {
   title: 'Luffy',
@@ -25,6 +25,7 @@ export default function RootLayout({
               <CssBaseline />
               <Header />
               {children}
+              <SubmitEnsDialog />
             </ThemeProvider>
           </DynamicProvider>
         </AppRouterCacheProvider>

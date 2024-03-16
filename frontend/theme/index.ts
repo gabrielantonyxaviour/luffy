@@ -55,6 +55,13 @@ export const theme = createTheme({
           style: { fontFamily: londrinaSolid.style.fontFamily, fontWeight: 400 }
         }
       ]
+    },
+    MuiDialog: {
+      styleOverrides: {
+        paper: {
+          backgroundColor: '#0c1e33'
+        }
+      }
     }
   }
 });

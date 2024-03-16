@@ -5,3 +5,4 @@ export { Hero } from './Hero';
 export { PlayerCard } from './PlayerCard';
 export { Section } from './Section';
 export { Sponsors } from './Sponsors';
+export { SubmitEnsDialog } from './SubmitEnsDialog';
