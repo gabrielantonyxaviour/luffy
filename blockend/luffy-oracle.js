@@ -1,5 +1,14 @@
 const gameWeek = args[0];
 
+const weightage = {
+  GK: {
+    saves: 1,
+    cleanSheet: 4,
+    penaltySaved: 6,
+    goalsConceded: -2,
+    goalsScored,
+  },
+};
 // In future, we will use multiple Sports APIs to get the player performance data
 // and perform aggregation to generate the points of the players.
 const playerPerformaceRequest = Functions.makeHttpRequest({
