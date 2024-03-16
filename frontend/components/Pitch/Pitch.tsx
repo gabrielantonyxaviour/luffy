@@ -8,6 +8,7 @@ import { useGeneralContext } from '@/contexts';
 const styles = {
   container: {
     width: '550px',
+    minWidth: '550px',
     height: '900px',
     backgroundImage: `url('/pitch.png')`,
     backgroundRepeat: 'no-repeat',
@@ -18,7 +19,7 @@ const styles = {
 };
 
 export const Pitch = () => {
-  const { squadSubmitted } = useGeneralContext();
+  const { squadGenerated } = useGeneralContext();
 
   return (
     <Box sx={styles.container}>
@@ -29,7 +30,7 @@ export const Pitch = () => {
           y={yPos}
           name={name}
           nationality={nationality}
-          isUnknown={!squadSubmitted}
+          isUnknown={!squadGenerated}
         />
       ))}
     </Box>

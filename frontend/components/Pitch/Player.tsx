@@ -92,7 +92,11 @@ export const Player: React.FC<PlayerProps> = ({
   return (
     <Box sx={[(theme) => styles(theme).container, { top: y, left: x }]}>
       <Image src={imageSrc} alt={imageAlt} width={50} height={70} />
-      <InfoBadge name={name} nationality={nationality.toLowerCase()} />
+      <InfoBadge
+        name={name}
+        nationality={nationality.toLowerCase()}
+        isUnknown={isUnknown}
+      />
     </Box>
   );
 };
