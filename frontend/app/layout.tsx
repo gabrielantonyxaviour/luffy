@@ -1,6 +1,6 @@
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import { ThemeProvider } from '@mui/material/styles';
-import { Container, CssBaseline } from '@mui/material';
+import { CssBaseline } from '@mui/material';
 import type { Metadata } from 'next';
 import { theme } from '@/theme';
 import { DynamicProvider, Header } from '@/components';
@@ -24,7 +24,7 @@ export default function RootLayout({
             <ThemeProvider theme={theme}>
               <CssBaseline />
               <Header />
-              <Container maxWidth='xl'>{children}</Container>
+              {children}
             </ThemeProvider>
           </DynamicProvider>
         </AppRouterCacheProvider>
