@@ -15,16 +15,16 @@ using ByteHasher for bytes;
 error InvalidNullifier();
 
 /// @dev The address of the World ID Router contract that will be used for verifying proofs
-IWorldID internal immutable worldId;
+IWorldID public immutable worldId;
 
 /// @dev The keccak256 hash of the externalNullifier (unique identifier of the action performed), combination of appId and action
-uint256 internal immutable externalNullifierHash;
+uint256 public immutable externalNullifierHash;
 
 /// @dev The World ID group ID (1 for Orb-verified)
-uint256 internal immutable groupId = 1;
+uint256 public immutable groupId = 1;
 
 /// @dev Whether a nullifier hash has been used already. Used to guarantee an action is only performed once by a single person
-mapping(uint256 => bool) internal nullifierHashes;
+mapping(uint256 => bool) public nullifierHashes;
 
 /// @param _worldId The address of the WorldIDRouter that will verify the proofs
 /// @param _appId The World ID App ID (from Developer Portal)
@@ -40,7 +40,7 @@ constructor(
         .hashToField();
 }
 
-event WorldCoinSuccess(address signal);
+event WorldCoinSuccess(address signal, uint256 root, uint256 nullifierHash);
 
 /// @param signal An arbitrary input from the user that cannot be tampered with. In this case, it is the user's wallet address.
 /// @param root The root (returned by the IDKit widget).
@@ -70,7 +70,7 @@ function verifyAndExecute(
 
     // Finally, execute your logic here, knowing the user is verified
 
-    emit WorldCoinSuccess(signal);
+    emit WorldCoinSuccess(signal, root, nullifierHash);
 }
 
 }

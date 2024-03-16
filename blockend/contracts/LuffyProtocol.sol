@@ -4,12 +4,15 @@ pragma solidity ^0.8.10;
 import "./worldcoin/interface/IWorldcoinVerifier.sol";
 import "./interface/hyperlane/IMailbox.sol";
 
+import {UltraVerifier} from "./noir/plonk_vk.sol";
+
 error NotOwner(address caller);
 error NotMailbox(address caller);
 error InvalidGameweek(uint256 gameweek);
 error SelectSquadDisabled(uint256 gameweek);
 error WorldCoinVerificationFailed(address signal, uint256 root, uint256 nullifierHash, uint256[8] proof);
 error InadequateCrosschainFee(uint32 destinationDomain, uint256 requiredFee, uint256 sentFee);
+error ZeroKnowledgeVerificationFailed();
 
 contract LuffyProtocol {
 
@@ -20,10 +23,13 @@ contract LuffyProtocol {
     mapping(uint256=>mapping(uint256=>uint256)) public playerPoints;
     mapping(address=>uint256) public addressToNullifier;
     mapping(uint256=>address[])public nulliferToAddresses;
+    mapping(uint256=>bytes32) public pointsMerkleRoot;
     uint256 public gameweekCounter;
     string[] public playersMetadata;
     bool public isSelectSquadEnabled;
     bool public worldcoinVerificationEnabled;
+
+    UltraVerifier public zkVerifier; 
 
     constructor(IMailbox _mailbox, IWorldcoinVerifier _worldcoinVerifier, string[] memory _playersMetadata)
     {
@@ -33,6 +39,7 @@ contract LuffyProtocol {
         gameweekCounter = 1;
         playersMetadata = _playersMetadata;
         owner=msg.sender;
+        zkVerifier=new UltraVerifier();
         emit PlayersMetadataUpdated(playersMetadata.length, _playersMetadata);
     }
 
@@ -59,6 +66,7 @@ contract LuffyProtocol {
     function setWorldcoinVerification(bool _worldcoinVerification) public onlyOwner {
         worldcoinVerificationEnabled = _worldcoinVerification;
     }
+
 
 
     function registerMorePlayers(string[] memory _playersMetadata) public onlyOwner {
@@ -90,6 +98,22 @@ contract LuffyProtocol {
         }
     }
 
+
+    // Noir playground
+    event ProofVerificationSuccess();
+    function testNoir(WorldcoinProofInput memory _wrldProof, bytes calldata _proof) public{
+        bytes32[] memory _publicInputs=new bytes32[](2);
+        _publicInputs[0]=gameWeekToSquadHash[gameweekCounter][_wrldProof.nullifierHash];
+        _publicInputs[1]=pointsMerkleRoot[gameweekCounter];
+        try zkVerifier.verify(_proof, _publicInputs)
+        {
+            emit ProofVerificationSuccess();
+        }catch{
+            revert ZeroKnowledgeVerificationFailed();
+        }
+    }
+
+    // Hyperlane Playground
     event SentPing(bytes32 indexed messageId, uint32 indexed destinationChain, address indexed destinationAddress, uint256 fee, bytes message);
     event ReceivedPong(bytes32 indexed messageId, uint32 indexed originChain, address indexed senderAddress, string message); 
     function pingHyperlane(uint32 destinationDomain, bytes32 recepientAddress, string memory message) public payable{
