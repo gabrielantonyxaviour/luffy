@@ -45,17 +45,26 @@ module.exports = {
   etherscan: {
     apiKey: {
       sepolia: networks.ethereumSepolia.verifyApiKey,
-      // scrollSepolia: networks.scrollSepolia.verifyApiKey,
+      arbitrumSepolia: networks.arbitrumSepolia.verifyApiKey,
+      chilizSpicy: networks.chilizSpicy.verifyApiKey,
     },
     customChains: [
-      // {
-      //   network: "scrollSepolia",
-      //   chainId: networks.scrollSepolia.chainId,
-      //   urls: {
-      //     apiURL: "https://api-sepolia.scrollscan.com/api/",
-      //     browserURL: "https://sepolia.scrollscan.dev",
-      //   },
-      // },
+      {
+        network: "arbitrumSepolia",
+        chainId: networks.arbitrumSepolia.chainId,
+        urls: {
+          apiURL: "https://api-sepolia.arbiscan.io/api",
+          browserURL: "https://sepolia.arbiscan.io/",
+        },
+      },
+      {
+        network: "chilizSpicy",
+        chainId: networks.chilizSpicy.chainId,
+        urls: {
+          apiURL: `https://api.routescan.io/v2/network/testnet/evm/${networks.chilizSpicy.chainId}/etherscan`,
+          browserURL: "https://testnet.chiliscan.com/",
+        },
+      },
     ],
   },
   gasReporter: {

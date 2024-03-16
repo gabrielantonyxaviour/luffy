@@ -32,6 +32,7 @@ contract LuffyProtocol {
         isSelectSquadEnabled = true;
         gameweekCounter = 1;
         playersMetadata = _playersMetadata;
+        owner=msg.sender;
         emit PlayersMetadataUpdated(playersMetadata.length, _playersMetadata);
     }
 
