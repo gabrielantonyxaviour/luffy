@@ -8,3 +8,4 @@ export { PlayerCard } from './PlayerCard';
 export { Section } from './Section';
 export { Sponsors } from './Sponsors';
 export { SubmitEnsDialog } from './SubmitEnsDialog';
+export { SubmitSquad } from './SubmitSquad';
