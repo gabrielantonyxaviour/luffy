@@ -1,6 +1,9 @@
+'use client';
+
 import { Box } from '@mui/material';
 import { Player } from './Player';
 import { players } from '@/data';
+import { useGeneralContext } from '@/contexts';
 
 const styles = {
   container: {
@@ -15,6 +18,8 @@ const styles = {
 };
 
 export const Pitch = () => {
+  const { squadSubmitted } = useGeneralContext();
+
   return (
     <Box sx={styles.container}>
       {players.map(({ id, xPos, yPos, name, nationality }) => (
@@ -24,6 +29,7 @@ export const Pitch = () => {
           y={yPos}
           name={name}
           nationality={nationality}
+          isUnknown={!squadSubmitted}
         />
       ))}
     </Box>

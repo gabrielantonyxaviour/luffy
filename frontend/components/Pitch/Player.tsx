@@ -38,10 +38,12 @@ const styles = (theme: Theme) => ({
 
 const InfoBadge = ({
   name,
-  nationality
+  nationality,
+  isUnknown = true
 }: {
   name: string;
   nationality: string;
+  isUnknown?: boolean;
 }) => {
   return (
     <Box sx={(theme) => styles(theme).infoBadge}>
@@ -53,14 +55,16 @@ const InfoBadge = ({
         sx={(theme) => styles(theme).infoBadgeName}
         noWrap
       >
-        {name.split(' ').splice(-1).join(' ')}
+        {!isUnknown ? name.split(' ').splice(-1).join(' ') : 'Select'}
       </Typography>
-      <Image
-        src={`/flags/${nationality}.png`}
-        alt={`flag_${nationality}`}
-        width={20}
-        height={20}
-      />
+      {!isUnknown && (
+        <Image
+          src={`/flags/${nationality}.png`}
+          alt={`flag_${nationality}`}
+          width={20}
+          height={20}
+        />
+      )}
     </Box>
   );
 };
@@ -70,17 +74,24 @@ type PlayerProps = {
   y: string | number;
   name: string;
   nationality: string;
+  isUnknown?: boolean;
 };
 
-export const Player: React.FC<PlayerProps> = ({ x, y, name, nationality }) => {
+export const Player: React.FC<PlayerProps> = ({
+  x,
+  y,
+  name,
+  nationality,
+  isUnknown = true
+}) => {
+  const imageSrc = isUnknown
+    ? '/teams/avatar.png'
+    : `/teams/${nationality}.png`;
+  const imageAlt = isUnknown ? 'player_unknown' : `player_${nationality}`;
+
   return (
     <Box sx={[(theme) => styles(theme).container, { top: y, left: x }]}>
-      <Image
-        src={`/teams/${nationality.toLowerCase()}.png`}
-        width={50}
-        height={70}
-        alt='team_germany'
-      />
+      <Image src={imageSrc} alt={imageAlt} width={50} height={70} />
       <InfoBadge name={name} nationality={nationality.toLowerCase()} />
     </Box>
   );
