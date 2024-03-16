@@ -1,6 +1,10 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { Box, Typography, Button } from '@mui/material';
+import { useClientAuth } from '@/hooks';
+import { useGeneralContext } from '@/contexts';
 
 const styles = {
   container: {
@@ -34,23 +38,30 @@ export const PlayerCard: React.FC<PlayerCardProps> = ({
   position,
   nationality
 }) => {
+  const { isAuthenticated } = useClientAuth();
+  const { squadGenerated } = useGeneralContext();
+  const isUnknown = !isAuthenticated || !squadGenerated;
+
+  const imageSrc = isUnknown
+    ? '/teams/avatar.png'
+    : `/teams/${nationality?.toLowerCase()}.png`;
+  const imageAlt = isUnknown ? 'unknown' : 'player';
+  const buttnText = isUnknown ? 'Select Player' : 'Change Player';
+
   return (
     <Box sx={styles.container}>
-      <Image
-        src={`/teams/${nationality?.toLowerCase()}.png`}
-        alt='player'
-        width={100}
-        height={120}
-      />
-      <Typography variant='h6' marginTop={2}>
-        {name}
-      </Typography>
+      <Image src={imageSrc} alt={imageAlt} width={100} height={120} />
+      {!isUnknown && (
+        <Typography variant='h6' marginTop={2}>
+          {name}
+        </Typography>
+      )}
       <Typography variant='body2' marginBottom={2}>
         {positionMap[position as keyof typeof positionMap]}
       </Typography>
       <Link href='gameplay'>
         <Button variant='outlined' color='warning'>
-          Change Player
+          {buttnText}
         </Button>
       </Link>
     </Box>

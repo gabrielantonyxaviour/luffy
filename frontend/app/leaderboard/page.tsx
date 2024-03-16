@@ -1,9 +1,11 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, Container } from '@mui/material';
 
 export default function Leaderboard() {
   return (
     <Box>
-      <Typography variant='h5'>Leaderboard</Typography>
+      <Container maxWidth='lg' sx={{ marginY: 3 }}>
+        <Typography variant='h4'>Leaderboard</Typography>
+      </Container>
     </Box>
   );
 }
