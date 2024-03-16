@@ -3,6 +3,7 @@ export { DynamicWidget } from './DynamicWidget';
 export { EnsWidget } from './EnsWidget';
 export { Header } from './Header';
 export { Hero } from './Hero';
+export { Logger } from './Logger';
 export { Pitch } from './Pitch';
 export { PlayerCard } from './PlayerCard';
 export { Section } from './Section';

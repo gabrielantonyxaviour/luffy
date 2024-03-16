@@ -7,13 +7,17 @@ export type GeneralContextType = {
   setEns: (ens: string) => void;
   squadGenerated: boolean;
   setSquadGenerated: (submitted: boolean) => void;
+  logs: string[];
+  addLog: (log: string) => void;
 };
 
 const defaultValue: GeneralContextType = {
   ens: '',
   setEns: () => {},
   squadGenerated: false,
-  setSquadGenerated: () => {}
+  setSquadGenerated: () => {},
+  logs: [],
+  addLog: () => {}
 };
 
 export const GeneralContext = createContext<GeneralContextType>(defaultValue);
