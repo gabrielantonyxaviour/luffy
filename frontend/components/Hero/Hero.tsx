@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { Box, Button, Theme, Typography } from '@mui/material';
 
 const styles = (theme: Theme) => ({
@@ -30,7 +31,9 @@ export const Hero = () => {
       <Typography variant='h4' sx={(theme) => styles(theme).subtext}>
         The web3 game for all football fans!
       </Typography>
-      <Button variant='contained'>Play Now</Button>
+      <Link href='/gameplay'>
+        <Button variant='contained'>Play Now</Button>
+      </Link>
     </Box>
   );
 };

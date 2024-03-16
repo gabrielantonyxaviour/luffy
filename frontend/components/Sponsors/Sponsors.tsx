@@ -4,7 +4,8 @@ import { Box, Stack } from '@mui/material';
 const ids = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'];
 
 const styles = {
-  backgroundColor: '#123',
+  backgroundColor: '#0c1e33',
+  border: '1px solid #ffffff11',
   padding: 4,
   display: 'flex',
   columnGap: 25,

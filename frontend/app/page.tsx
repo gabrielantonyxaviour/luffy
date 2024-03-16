@@ -10,7 +10,16 @@ export default function Home() {
         <Section title='How to play Luffy'>
           <Stack direction='row' spacing={5}>
             <Box
-              sx={{ width: '50%', height: '400px', backgroundColor: '#123' }}
+              sx={{
+                width: '50%',
+                height: '400px',
+                backgroundImage: `url('/champions.png')`,
+                border: '1px solid #ffffff11',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
+                backgroundSize: 'cover',
+                borderRadius: 2
+              }}
             ></Box>
             <Box sx={{ width: '50%' }}>
               <Typography sx={{ fontSize: '24px' }} marginBottom={2}>

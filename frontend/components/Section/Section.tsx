@@ -3,7 +3,8 @@ import { PropsWithChildren } from 'react';
 
 const styles = {
   container: {
-    paddingTop: 8
+    marginTop: 8,
+    marginBottom: 12
   }
 };
 
