@@ -1,21 +1,21 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import { Container, Typography, Box, Button, Stack } from '@mui/material';
-import { Pitch, SubmitSquad, Logger, FancyHeader } from '@/components';
-import { useGeneralContext } from '@/contexts';
-import { useClientAuth } from '@/hooks';
-import { useEffect, useState } from 'react';
-import { createWalletClient, hexToBigInt, http } from 'viem';
-import { baseSepolia } from 'viem/chains';
-import { privateKeyToAccount } from 'viem/accounts';
-import { createPublicClient } from 'viem';
+import Image from "next/image";
+import { Container, Typography, Box, Button, Stack } from "@mui/material";
+import { Pitch, SubmitSquad, Logger, FancyHeader } from "@/components";
+import { useGeneralContext } from "@/contexts";
+import { useClientAuth } from "@/hooks";
+import { useEffect, useState } from "react";
+import { createWalletClient, hexToBigInt, http } from "viem";
+import { baseSepolia } from "viem/chains";
+import { privateKeyToAccount } from "viem/accounts";
+import { createPublicClient } from "viem";
 import {
   WORLDCOIN_VERIFIER_ABI,
-  WORLDCOIN_VERIFIER_ADDRESS
-} from '@/utils/constants';
-import { useDynamicContext } from '@dynamic-labs/sdk-react-core';
-import { ChooseBet } from '@/components/ChooseBet';
+  WORLDCOIN_VERIFIER_ADDRESS,
+} from "@/utils/constants";
+import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
+import { ChooseBet } from "@/components/ChooseBet";
 
 export default function BuildSquad() {
   const { squadGenerated, setSquadGenerated, addLog } = useGeneralContext();
@@ -29,65 +29,60 @@ export default function BuildSquad() {
   const [worldVerified, setWorldVerified] = useState<boolean>(true);
   const [logs, setLogs] = useState<string[]>([]);
   const handleOnAutofill = () => {
-    setLogs((prev) => [...prev, 'You squad has been autofilled successfully']);
+    setLogs((prev) => [...prev, "You squad has been autofilled successfully"]);
     setSquadGenerated(true);
   };
 
   useEffect(() => {
     if (worldcoin && address) {
-      setLogs((prev) => [...prev, 'Worldcoin proof generated successfully']);
+      setLogs((prev) => [...prev, "Worldcoin proof generated successfully"]);
       setLogs((prev) => [...prev, worldcoin.proofs]);
 
       (async function () {
         try {
-          console.log('PRIVATE KEY');
+          console.log("PRIVATE KEY");
           console.log(process.env.NEXT_PUBLIC_PRIVATE_KEY);
           const account = privateKeyToAccount(
-            (process.env.NEXT_PUBLIC_PRIVATE_KEY as `0x${string}`) || '0x'
+            (process.env.NEXT_PUBLIC_PRIVATE_KEY as `0x${string}`) || "0x"
           );
-          console.log('BASE SEPOLIA');
+          console.log("BASE SEPOLIA");
           console.log(process.env.NEXT_PUBLIC_BASE_SEPOLIA_URL);
           const walletClient = createWalletClient({
             chain: baseSepolia,
             account,
-            transport: http(process.env.NEXT_PUBLIC_BASE_SEPOLIA_URL)
+            transport: http(process.env.NEXT_PUBLIC_BASE_SEPOLIA_URL),
           });
 
           const publicClient = createPublicClient({
             chain: baseSepolia,
-            transport: http(process.env.NEXT_PUBLIC_BASE_SEPOLIA_URL)
+            transport: http(process.env.NEXT_PUBLIC_BASE_SEPOLIA_URL),
           });
 
           console.log([
             address,
             hexToBigInt(worldcoin.merkle_root),
             hexToBigInt(worldcoin.nullifier_hash),
-            worldcoin.proofs
+            worldcoin.proofs,
           ]);
           const { request } = await publicClient.simulateContract({
             account,
             address: WORLDCOIN_VERIFIER_ADDRESS,
             abi: WORLDCOIN_VERIFIER_ABI,
-            functionName: 'verifyAndExecute',
+            functionName: "verifyAndExecute",
             args: [
               address,
               hexToBigInt(worldcoin.merkle_root),
               hexToBigInt(worldcoin.nullifier_hash),
-              worldcoin.proofs
-            ]
+              worldcoin.proofs,
+            ],
           });
 
           const tx = await walletClient.writeContract(request);
-<<<<<<< HEAD
           setLogs((prev) => [...prev, "Worldcoin proof verified on-chain"]);
           setLogs((prev) => [...prev, "https://sepolia.basescan.org/tx/" + tx]);
           setWorldVerified(true);
-=======
-          setLogs((prev) => [...prev, 'Worldcoin proof verified on-chain']);
-          setLogs((prev) => [...prev, 'https://sepolia.basescan.org/tx/' + tx]);
->>>>>>> refs/remotes/origin/main
         } catch (e) {
-          setLogs((prev) => [...prev, 'Worldcoin proof verification failed']);
+          setLogs((prev) => [...prev, "Worldcoin proof verification failed"]);
           setLogs((prev) => [...prev, (e as any).toString()]);
           console.log(e);
         }
@@ -97,25 +92,24 @@ export default function BuildSquad() {
 
   return (
     <Box>
-      <Container maxWidth='lg' sx={{ marginY: 3 }}>
-        <FancyHeader text='Build Squad' />
+      <Container maxWidth="lg" sx={{ marginY: 3 }}>
+        <FancyHeader text="Build Squad" />
         <Stack
-          direction='row'
-          alignItems='flex-start'
-          justifyItems='center'
+          direction="row"
+          alignItems="flex-start"
+          justifyItems="center"
           gap={5}
         >
           <Pitch />
           <Box
             sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              width: '100%',
-              gap: 3
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              width: "100%",
+              gap: 3,
             }}
           >
-<<<<<<< HEAD
             <Stack direction="row" spacing={2}>
               {worldVerified && (
                 <>
@@ -127,17 +121,6 @@ export default function BuildSquad() {
                   >
                     Autofill Squad
                   </Button>
-=======
-            <Stack direction='row' spacing={2}>
-              <Button
-                disabled={!isAuthenticated}
-                variant='outlined'
-                color='warning'
-                onClick={handleOnAutofill}
-              >
-                Autofill Squad
-              </Button>
->>>>>>> refs/remotes/origin/main
 
                   <ChooseBet
                     amount={amount}
@@ -155,7 +138,7 @@ export default function BuildSquad() {
                 />
               )}
             </Stack>
-            <Typography variant='h4'>Logs</Typography>
+            <Typography variant="h4">Logs</Typography>
             <Logger logs={logs} />
           </Box>
         </Stack>
