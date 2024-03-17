@@ -14,11 +14,10 @@ const ethers = require("ethers");
 const { networks } = require("../networks");
 require("@chainlink/env-enc").config();
 
-const testingChainlinkAddress = "0xA8F191028D7319903d3F648E0f81A8E38Bb80B7D"; // REPLACE this with your Functions consumer address
+const luffyProtocolAddress = "0x88854958eCE14EF7AC63AC684AAF19f7D9e84233"; // REPLACE this with your Functions consumer address
 const subscriptionId = 37; // REPLACE this with your subscription ID
 
 const updateRequest = async () => {
-  // hardcoded for Polygon Mumbai
   const functionsRouterAddress = "0x234a5fb5Bd614a7AA2FfAB244D603abFA0Ac5C5C";
   const donId = "fun-arbitrum-sepolia-1";
   const gatewayUrls = [
@@ -124,7 +123,7 @@ const updateRequest = async () => {
     }); // encode encrypted secrets version
 
   const automatedFunctionsConsumer = new ethers.Contract(
-    testingChainlinkAddress,
+    luffyProtocolAddress,
     testChainlink.abi,
     signer
   );

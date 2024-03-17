@@ -14,10 +14,10 @@ task("deploy-rewards", "Deploys the LuffyRewards contract")
     await run("compile");
 
     const args = [
-      "0xfFAEF09B3cd11D9b20d1a19bECca54EEC2884766",
-      "APE",
-      "0x01e61008f78a83e0dabd2fbd7ef81b64cdd2e1f4",
-      "0x0000000000000000000000008723e1E9955BC0461a12ADD57DEa5Ab84B3aFdAc",
+      "0x71Ef7f9Ac3a17852de46d8e34A686B055946E9D5",
+      "CHZ",
+      "0x0000000000000000000000000000000000000000",
+      "0x00000000000000000000000088854958eCE14EF7AC63AC684AAF19f7D9e84233",
     ];
 
     const protocolContractFactory = await ethers.getContractFactory(
