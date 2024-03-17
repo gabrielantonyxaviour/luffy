@@ -21,13 +21,8 @@ export const Header = () => {
   return (
     <Box component='nav'>
       <Container sx={styles} maxWidth='xl'>
-        <Stack
-          direction='row'
-          justifyContent='center'
-          alignItems='center'
-          spacing={0.5}
-        >
-          <Image src='/logo.png' alt='logo' width={80} height={80} />
+        <Stack direction='row' justifyContent='center' alignItems='center'>
+          <Image src='/logo.png' alt='logo' width={84} height={84} />
           <Typography variant='h4' component='h3'>
             Luffy
           </Typography>

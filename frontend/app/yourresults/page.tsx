@@ -2,20 +2,16 @@
 
 import Image from 'next/image';
 import { Container, Typography, Box, Stack } from '@mui/material';
-import { Pitch, Logger, ResultsCard } from '@/components';
+import { Pitch, Logger, ResultsCard, FancyHeader } from '@/components';
+import { useState } from 'react';
 
 export default function YourResults() {
+  const [logs, setLogs] = useState<string[]>([]);
+
   return (
     <Box>
       <Container maxWidth='lg' sx={{ marginY: 3 }}>
-        <Box position='relative'>
-          <Typography variant='h4' marginBottom={3}>
-            Your Results
-          </Typography>
-          <Box position='absolute' top={-22} left={150}>
-            <Image src='/glasses.gif' alt='classes' width={100} height={100} />
-          </Box>
-        </Box>
+        <FancyHeader text='Your Results' />
         <Stack
           direction='row'
           alignItems='flex-start'
@@ -34,7 +30,7 @@ export default function YourResults() {
           >
             <ResultsCard />
             <Typography variant='h4'>Logs</Typography>
-            <Logger />
+            <Logger logs={logs} />
           </Box>
         </Stack>
       </Container>
