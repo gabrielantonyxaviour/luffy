@@ -213,8 +213,13 @@ export default function YourResults() {
               gap: 3,
             }}
           >
+<<<<<<< Updated upstream
             <ResultsCard />
             <Typography variant="h4">Logs</Typography>
+=======
+            <ResultsCard points='12' rewards='100' currency='CZH' />
+            <Typography variant='h4'>Logs</Typography>
+>>>>>>> Stashed changes
             <Logger logs={logs} />
           </Box>
         </Stack>
