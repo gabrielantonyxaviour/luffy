@@ -14,6 +14,7 @@ task("deploy-protocol", "Deploys the LuffyProtocol contract")
     await run("compile");
 
     const args = [
+      "0x234a5fb5Bd614a7AA2FfAB244D603abFA0Ac5C5C",
       "0x9288277372982b74C174132B5f43B9b1900855Fd",
       ["Sample Player 1 Data", "Sample Player 2 Data", "Sample Player 3 Data"],
     ];

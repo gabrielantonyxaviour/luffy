@@ -44,6 +44,7 @@ module.exports = {
   },
   etherscan: {
     apiKey: {
+      sepolia: networks.ethereumSepolia.verifyApiKey,
       baseSepolia: networks.baseSepolia.verifyApiKey,
       arbitrumSepolia: networks.arbitrumSepolia.verifyApiKey,
       chilizSpicy: networks.chilizSpicy.verifyApiKey,

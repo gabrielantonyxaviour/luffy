@@ -62,15 +62,11 @@ contract LuffyProtocol is FunctionsClient, ConfirmedOwner {
     uint64 public s_subscriptionId;
     mapping(bytes32=>uint256) public requestToGameweek;
 
-    constructor(address _functionsRouter, IMailbox _mailbox, string[] memory _playersMetadata, uint32[2] memory _destinationChainIds,  bytes32[2] memory _destinationAddresses) 
+    constructor(address _functionsRouter, IMailbox _mailbox, string[] memory _playersMetadata) 
     FunctionsClient(_functionsRouter) ConfirmedOwner(msg.sender) 
     {
         // Hyperlane Initializations
         mailbox = _mailbox;
-        destinationChainIds[false] = _destinationChainIds[0];
-        destinationChainIds[true] = _destinationChainIds[1];
-        destinationAddress[false] = _destinationAddresses[0];
-        destinationAddress[true] = _destinationAddresses[1];
 
         // Luffy Protocol Initializations
         isSelectSquadEnabled = true;
@@ -112,7 +108,7 @@ contract LuffyProtocol is FunctionsClient, ConfirmedOwner {
     function registerSquad(uint256 _gameWeek, bytes32 _squadHash, address wrldCoinSignal, uint256 wrldCoinNullifier) public {
         // WorldCoin Proof is verified in Base Sepolia
         if(!isSelectSquadEnabled) revert SelectSquadDisabled(_gameWeek);
-        if(_gameWeek != gameweekCounter) revert InvalidGameweek(_gameWeek);
+        if(_gameWeek > gameweekCounter) revert InvalidGameweek(_gameWeek);
         if(addressToNullifier[wrldCoinSignal] == 0){
             addressToNullifier[wrldCoinSignal] = wrldCoinNullifier;
             nulliferToAddresses[wrldCoinNullifier].push(wrldCoinSignal);
@@ -153,19 +149,6 @@ contract LuffyProtocol is FunctionsClient, ConfirmedOwner {
         if(msg.value < _requiredFee) revert InadequateCrosschainFee(destinationDomain, _requiredFee, msg.value);
 
         bytes32 messageId = mailbox.dispatch{value: msg.value}(destinationDomain,recepientAddress, abi.encode(gameweekCounter-1,totalPoints, _nullifierHash));
-    }
-
-    // Testing helpers
-    function setSelectSquadEnabled(bool _isSelectSquadEnabled) public onlyOwner {
-        isSelectSquadEnabled = _isSelectSquadEnabled;
-    }
-
-    function setGameweekCounter(uint256 _gameweekCounter) public onlyOwner {
-        gameweekCounter = _gameweekCounter;
-    }
-
-    function setPointsMerkleRoot(uint256 _gameweek, bytes32 _pointsMerkleRoot) public onlyOwner {
-        pointsMerkleRoot[_gameweek] = _pointsMerkleRoot;
     }
 
     // Chainlink Automation
@@ -217,6 +200,31 @@ contract LuffyProtocol is FunctionsClient, ConfirmedOwner {
         }
         gameweekCounter+=1;
     } 
+
+
+    // Testing helpers
+    function setupDestinationAddresses(uint32[2] memory _destinationChainIds,  bytes32[2] memory _destinationAddresses) public onlyOwner {
+        destinationChainIds[false] = _destinationChainIds[0];
+        destinationChainIds[true] = _destinationChainIds[1];
+        destinationAddress[false] = _destinationAddresses[0];
+        destinationAddress[true] = _destinationAddresses[1];
+    }
+    function setSelectSquadEnabled(bool _isSelectSquadEnabled) public onlyOwner {
+        isSelectSquadEnabled = _isSelectSquadEnabled;
+    }
+
+    function setGameweekCounter(uint256 _gameweekCounter) public onlyOwner {
+        gameweekCounter = _gameweekCounter;
+    }
+
+    function setPointsMerkleRoot(uint256 _gameweek, bytes32 _pointsMerkleRoot) public onlyOwner {
+        pointsMerkleRoot[_gameweek] = _pointsMerkleRoot;
+    }
+
+    function setZkVerificationEnabled(bool _isZkVerificationEnabled) public onlyOwner {
+        isZkVerificationEnabled = _isZkVerificationEnabled;
+    }
+
 
     // // Noir playground
     // event ProofVerificationSuccess();
