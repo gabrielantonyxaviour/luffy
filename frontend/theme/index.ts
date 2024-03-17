@@ -59,7 +59,8 @@ export const theme = createTheme({
     MuiDialog: {
       styleOverrides: {
         paper: {
-          backgroundColor: '#102640'
+          backgroundColor: '#102640',
+          backgroundImage: 'none'
         }
       }
     },
