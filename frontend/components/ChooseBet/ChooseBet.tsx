@@ -43,8 +43,8 @@ export const ChooseBet = ({
   const placeBet = async () => {
     if (primaryWallet) {
       console.log(network);
-      if (coin == "CHZ" && network != 88882) {
-        setNetwork(88882);
+      if (coin == "CHZ") {
+        if (network != 88882) setNetwork(88882);
 
         const publicClient = createPublicClient({
           chain: spicy,
@@ -61,8 +61,8 @@ export const ChooseBet = ({
         });
         const tx = await walletClient.writeContract(request);
         console.log(tx);
-      } else if (coin == "APE" && network != 11155111) {
-        setNetwork(11155111);
+      } else if (coin == "APE") {
+        if (network != 11155111) setNetwork(11155111);
 
         const publicClient = createPublicClient({
           chain: sepolia,
@@ -81,6 +81,8 @@ export const ChooseBet = ({
         console.log(tx);
       }
       console.log("Placing bet");
+    } else {
+      console.log("No wallet connected");
     }
   };
 
