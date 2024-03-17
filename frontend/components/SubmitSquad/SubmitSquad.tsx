@@ -1,28 +1,30 @@
-'use client';
+"use client";
 
 import {
   IDKitWidget,
   IErrorState,
   ISuccessResult,
   VerificationLevel,
-  useIDKit
-} from '@worldcoin/idkit';
-import { Button } from '@mui/material';
-import { useSnackbar } from 'notistack';
-import { Worldcoin } from '../Icons';
-import { decodeAbiParameters } from 'viem';
-import { useDynamicContext } from '@dynamic-labs/sdk-react-core';
+  useIDKit,
+} from "@worldcoin/idkit";
+import { Button } from "@mui/material";
+import { useSnackbar } from "notistack";
+import { Worldcoin } from "../Icons";
+import { decodeAbiParameters } from "viem";
+import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 
 const unpack = (proof: `0x${string}`) => {
-  return decodeAbiParameters([{ type: 'uint256[8]' }], proof)[0];
+  return decodeAbiParameters([{ type: "uint256[8]" }], proof)[0];
 };
 
 type SubmitSquadProps = {
   isDisabled: boolean;
+  setWorldCoin: (result: any) => void;
 };
 
 export const SubmitSquad: React.FC<SubmitSquadProps> = ({
-  isDisabled = true
+  isDisabled = true,
+  setWorldCoin,
 }) => {
   const { setOpen } = useIDKit();
   const { enqueueSnackbar } = useSnackbar();
@@ -30,24 +32,27 @@ export const SubmitSquad: React.FC<SubmitSquadProps> = ({
   const { address } = primaryWallet || {};
 
   const handleOnSuccess = (result: ISuccessResult) => {
-    console.log({ result });
     const bigNumProofs = unpack((result as any).proof);
-    const stringProofs = bigNumProofs.map((bn: any) => bn.toString(16));
-    console.log(unpack((result as any).proof));
-    console.log({ stringProofs });
-    enqueueSnackbar('Submitted squad successfully', { variant: 'success' });
+    // console.log({ result });
+    setWorldCoin({ ...result, proofs: bigNumProofs });
+
+    // console.log(unpack((result as any).proof));
+    // console.log({ stringProofs });
+    enqueueSnackbar("Worldcoin proof generated successfully", {
+      variant: "success",
+    });
   };
 
   const handleOnError = (error: IErrorState) => {
     console.log({ error });
-    enqueueSnackbar('Failed to submit squad', { variant: 'error' });
+    enqueueSnackbar("Failed to submit squad", { variant: "error" });
   };
 
   return (
     <>
       <IDKitWidget
         app_id={`app_${process.env.NEXT_PUBLIC_WORLDCOIN_APP_ID}`}
-        action='luffy'
+        action="luffy"
         signal={address}
         onSuccess={handleOnSuccess}
         onError={handleOnError}
@@ -55,7 +60,7 @@ export const SubmitSquad: React.FC<SubmitSquadProps> = ({
       />
       <Button
         disabled={isDisabled}
-        variant='outlined'
+        variant="outlined"
         startIcon={<Worldcoin />}
         onClick={() => setOpen(true)}
       >
