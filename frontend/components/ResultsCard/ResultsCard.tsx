@@ -25,7 +25,9 @@ export const ResultsCard = () => {
           <Typography fontWeight={300}>100 CZH</Typography>
         </Stack>
       </Stack>
-      <Button variant='contained'>Claim</Button>
+      <Button variant='contained' size='small'>
+        Claim
+      </Button>
     </Box>
   );
 };
