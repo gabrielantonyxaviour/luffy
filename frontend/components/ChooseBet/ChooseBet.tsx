@@ -39,10 +39,14 @@ export const ChooseBet = ({
   amount,
   setAmount,
   setChainId,
+  log,
+  setBetPlaced,
 }: {
   amount: number;
   setAmount: (amount: number) => void;
   setChainId: (chainId: number) => void;
+  log: (log: string) => void;
+  setBetPlaced: (_betPlaced: boolean) => void;
 }) => {
   const [coin, setCoin] = useState("CHZ");
   const { network, setNetwork } = useDynamicContext();
@@ -66,7 +70,7 @@ export const ChooseBet = ({
           abi: LUFFY_REWARDS_ABI,
           functionName: "betAmount",
           args: [
-            3,
+            1,
             0, //hexToBigInt(nullifierHash as `0x${string}`),
             parseEther(amount.toString()),
           ],
@@ -75,6 +79,9 @@ export const ChooseBet = ({
         });
         const tx = await walletClient.writeContract(request);
         console.log(tx);
+        log("Bet placed successfully");
+        log(`https://testnet.chiliscan.com/tx/${tx}`);
+        setBetPlaced(true);
       } else if (coin == "APE") {
         if (network != 11155111) setNetwork(11155111);
 
@@ -83,15 +90,6 @@ export const ChooseBet = ({
           transport: http(process.env.NEXT_PUBLIC_SEPOLIA_URL),
         });
         const walletClient = await createWalletClientFromWallet(primaryWallet);
-
-        const { request: approvalTx } = await publicClient.simulateContract({
-          address: APECOIN_SEPOLIA_ADDRESS,
-          abi: ERC20_ABI,
-          functionName: "approve",
-          args: [LUFFY_REWARDS_SEPOLIA_ADDRESS, parseEther(amount.toString())],
-        });
-        const approvalTxHash = await walletClient.writeContract(approvalTx);
-        console.log(approvalTxHash);
         const { request: placeBetTx } = await publicClient.simulateContract({
           address: LUFFY_REWARDS_SEPOLIA_ADDRESS,
           abi: LUFFY_REWARDS_ABI,
@@ -106,6 +104,9 @@ export const ChooseBet = ({
         });
         const tx = await walletClient.writeContract(placeBetTx);
         console.log(tx);
+        log("Bet placed successfully");
+        log(`https://sepolia.etherscan.io/tx/${tx}`);
+        setBetPlaced(true);
       }
       console.log("Placing bet");
     } else {

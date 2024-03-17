@@ -7,22 +7,28 @@ import { useGeneralContext } from "@/contexts";
 import { useClientAuth } from "@/hooks";
 import { use, useEffect, useState } from "react";
 import { createWalletClient, hexToBigInt, http } from "viem";
-import { baseSepolia } from "viem/chains";
+import { arbitrumSepolia, baseSepolia } from "viem/chains";
 import { privateKeyToAccount } from "viem/accounts";
 import { createPublicClient } from "viem";
 import {
+  LUFFY_PROTOCOL_ABI,
+  LUFFY_PROTOCOL_ADDRESS,
   WORLDCOIN_VERIFIER_ABI,
   WORLDCOIN_VERIFIER_ADDRESS,
 } from "@/utils/constants";
-import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
+import {
+  createWalletClientFromWallet,
+  useDynamicContext,
+} from "@dynamic-labs/sdk-react-core";
 import { ChooseBet } from "@/components/ChooseBet";
+import computeMerkleRoot from "@/utils/computeMerkleRoot";
 
 export default function BuildSquad() {
   const { squadGenerated, setSquadGenerated, addLog } = useGeneralContext();
   const { isAuthenticated } = useClientAuth();
-  const { primaryWallet } = useDynamicContext();
+  const { primaryWallet, setNetwork, network } = useDynamicContext();
   const { setNullifierHash } = useGeneralContext();
-
+  const { nullifierHash } = useGeneralContext();
   const { address } = primaryWallet || {};
 
   const [amount, setAmount] = useState<number>(0);
@@ -120,6 +126,59 @@ export default function BuildSquad() {
             }}
           >
             <Stack direction="row" spacing={2}>
+              {worldVerified && betPlaced && (
+                <Button
+                  variant="outlined"
+                  color="info"
+                  onClick={async () => {
+                    // create squad
+                    if (primaryWallet) {
+                      if (network != 421614) setNetwork(421614);
+                      console.log("Creating squad");
+
+                      const squad = [
+                        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 0, 0, 0, 0,
+                      ];
+                      const merkleRoot = computeMerkleRoot(squad);
+
+                      const publicClient = createPublicClient({
+                        chain: arbitrumSepolia,
+                        transport: http(
+                          process.env.NEXT_PUBLIC_ARB_SEPOLIA_URL
+                        ),
+                      });
+                      console.log(process.env.NEXT_PUBLIC_ARB_SEPOLIA_URL);
+                      const walletClient = await createWalletClientFromWallet(
+                        primaryWallet
+                      );
+                      console.log("HEYYYYYYYYYY");
+                      console.log([
+                        1,
+                        merkleRoot, //hexToBigInt(nullifierHash as `0x${string}`),
+                        primaryWallet.address as `0x${string}`,
+                        nullifierHash == "" ? 0 : nullifierHash,
+                      ]);
+                      const { request } = await publicClient.simulateContract({
+                        address: LUFFY_PROTOCOL_ADDRESS,
+                        abi: LUFFY_PROTOCOL_ABI,
+                        functionName: "registerSquad",
+                        args: [
+                          1,
+                          merkleRoot, //hexToBigInt(nullifierHash as `0x${string}`),
+                          primaryWallet.address as `0x${string}`,
+                          nullifierHash == "" ? 0 : nullifierHash,
+                        ],
+                        account: primaryWallet.address as `0x${string}`,
+                      });
+
+                      const tx = await walletClient.writeContract(request);
+                      console.log(tx);
+                    }
+                  }}
+                >
+                  Submit Squad
+                </Button>
+              )}
               {worldVerified && !betPlaced && (
                 <>
                   <Button
@@ -138,6 +197,12 @@ export default function BuildSquad() {
                     }}
                     setAmount={(_amount) => {
                       setAmount(_amount);
+                    }}
+                    log={(log: string) => {
+                      setLogs((prev) => [...prev, log]);
+                    }}
+                    setBetPlaced={(placed: boolean) => {
+                      setBetPlaced(placed);
                     }}
                   />
                 </>
