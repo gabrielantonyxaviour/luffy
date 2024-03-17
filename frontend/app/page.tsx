@@ -1,32 +1,32 @@
-import Image from 'next/image';
-import { Box, Container, Typography, Stack } from '@mui/material';
-import { Hero, Section, PlayerCard, Sponsors } from '@/components';
-import { players } from '@/data';
+import Image from "next/image";
+import { Box, Container, Typography, Stack } from "@mui/material";
+import { Hero, Section, PlayerCard, Sponsors } from "@/components";
+import { players } from "@/data";
 
 export default function Home() {
   return (
     <Box marginBottom={5}>
       <Hero />
-      <Container maxWidth='xl'>
-        <Section title='How to play Luffy'>
-          <Stack direction='row' spacing={5}>
+      <Container maxWidth="xl">
+        <Section title="How to play Luffy">
+          <Stack direction="row" spacing={5}>
             <Box
               sx={{
-                width: '50%',
-                height: '400px',
+                width: "50%",
+                height: "400px",
                 backgroundImage: `url('/champions.png')`,
-                border: '1px solid #ffffff11',
-                backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'center',
-                backgroundSize: 'cover',
-                borderRadius: 2
+                border: "1px solid #ffffff11",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+                backgroundSize: "cover",
+                borderRadius: 2,
               }}
             ></Box>
-            <Box sx={{ width: '50%' }}>
-              <Typography sx={{ fontSize: '24px' }} marginBottom={2}>
+            <Box sx={{ width: "50%" }}>
+              <Typography sx={{ fontSize: "24px" }} marginBottom={2}>
                 How it works
               </Typography>
-              <Typography sx={{ color: '#ffffffaa' }}>
+              <Typography sx={{ color: "#ffffffaa" }}>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 Curabitur tincidunt, nulla vel ornare ullamcorper, justo quam
                 sodales turpis, eu scelerisque tortor erat at mi. Duis vitae
@@ -42,8 +42,8 @@ export default function Home() {
             </Box>
           </Stack>
         </Section>
-        <Section title='Squad'>
-          <Stack direction='row' spacing={5} sx={{ overflowY: 'scroll' }}>
+        <Section title="Squad">
+          <Stack direction="row" spacing={5} sx={{ overflowY: "scroll" }}>
             {players.map(({ id, name, position, nationality }) => (
               <PlayerCard
                 key={id}
@@ -54,7 +54,7 @@ export default function Home() {
             ))}
           </Stack>
         </Section>
-        <Section title='Powered By'>
+        <Section title="Powered By">
           <Sponsors />
         </Section>
       </Container>

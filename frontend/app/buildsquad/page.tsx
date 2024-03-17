@@ -26,6 +26,7 @@ export default function BuildSquad() {
 
   const [amount, setAmount] = useState<number>(0);
   const [worldcoin, setWorldCoin] = useState<any>(null);
+  const [worldVerified, setWorldVerified] = useState<boolean>(true);
   const [logs, setLogs] = useState<string[]>([]);
   const handleOnAutofill = () => {
     setLogs((prev) => [...prev, "You squad has been autofilled successfully"]);
@@ -79,6 +80,7 @@ export default function BuildSquad() {
           const tx = await walletClient.writeContract(request);
           setLogs((prev) => [...prev, "Worldcoin proof verified on-chain"]);
           setLogs((prev) => [...prev, "https://sepolia.basescan.org/tx/" + tx]);
+          setWorldVerified(true);
         } catch (e) {
           setLogs((prev) => [...prev, "Worldcoin proof verification failed"]);
           setLogs((prev) => [...prev, (e as any).toString()]);
@@ -111,27 +113,32 @@ export default function BuildSquad() {
             }}
           >
             <Stack direction="row" spacing={2}>
-              <Button
-                disabled={!isAuthenticated}
-                variant="outlined"
-                color="warning"
-                onClick={handleOnAutofill}
-              >
-                Autofill Squad
-              </Button>
+              {worldVerified && (
+                <>
+                  <Button
+                    disabled={!isAuthenticated}
+                    variant="outlined"
+                    color="warning"
+                    onClick={handleOnAutofill}
+                  >
+                    Autofill Squad
+                  </Button>
 
-              <ChooseBet
-                amount={amount}
-                setAmount={(_amount) => {
-                  setAmount(_amount);
-                }}
-              />
-              <SubmitSquad
-                isDisabled={!isAuthenticated || !squadGenerated || amount === 0}
-                setWorldCoin={(data) => {
-                  setWorldCoin(data);
-                }}
-              />
+                  <ChooseBet
+                    amount={amount}
+                    setAmount={(_amount) => {
+                      setAmount(_amount);
+                    }}
+                  />
+                </>
+              )}
+              {!worldVerified && (
+                <SubmitSquad
+                  setWorldCoin={(data) => {
+                    setWorldCoin(data);
+                  }}
+                />
+              )}
             </Stack>
             <Typography variant="h4">Logs</Typography>
             <Logger logs={logs} />

@@ -11,8 +11,10 @@ import {
   Stack,
   Input,
   styled,
+  Button,
 } from "@mui/material";
 import Image from "next/image";
+import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
 
 export const ChooseBet = ({
   amount,
@@ -22,6 +24,17 @@ export const ChooseBet = ({
   setAmount: (amount: number) => void;
 }) => {
   const [coin, setCoin] = useState("CHZ");
+  const { network, setNetwork } = useDynamicContext();
+
+  const placeBet = () => {
+    console.log(network);
+    if (coin == "CHZ" && network != 88882) {
+      setNetwork(88882);
+    } else if (coin == "APE" && network != 11155111) {
+      setNetwork(11155111);
+    }
+    console.log("Placing bet");
+  };
 
   const handleChange = (event: SelectChangeEvent) => {
     setCoin(event.target.value as string);
@@ -35,7 +48,7 @@ export const ChooseBet = ({
   });
 
   return (
-    <Box sx={{ maxWidth: 200 }}>
+    <Box sx={{ maxWidth: 400 }}>
       <Stack direction={"row"} spacing={1} marginY={"auto"}>
         <Input
           type="text"
@@ -91,6 +104,14 @@ export const ChooseBet = ({
             </MenuItem>
           </Select>
         </FormControl>
+        <Button
+          disabled={amount == 0}
+          variant="outlined"
+          color="success"
+          onClick={placeBet}
+        >
+          Place Bet
+        </Button>
       </Stack>
     </Box>
   );

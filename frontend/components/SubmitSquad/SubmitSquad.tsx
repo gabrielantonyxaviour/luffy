@@ -18,14 +18,10 @@ const unpack = (proof: `0x${string}`) => {
 };
 
 type SubmitSquadProps = {
-  isDisabled: boolean;
   setWorldCoin: (result: any) => void;
 };
 
-export const SubmitSquad: React.FC<SubmitSquadProps> = ({
-  isDisabled = true,
-  setWorldCoin,
-}) => {
+export const SubmitSquad: React.FC<SubmitSquadProps> = ({ setWorldCoin }) => {
   const { setOpen } = useIDKit();
   const { enqueueSnackbar } = useSnackbar();
   const { primaryWallet } = useDynamicContext();
@@ -59,12 +55,11 @@ export const SubmitSquad: React.FC<SubmitSquadProps> = ({
         verification_level={VerificationLevel.Orb}
       />
       <Button
-        disabled={isDisabled}
         variant="outlined"
         startIcon={<Worldcoin />}
         onClick={() => setOpen(true)}
       >
-        Submit Squad
+        Verify Human
       </Button>
     </>
   );
