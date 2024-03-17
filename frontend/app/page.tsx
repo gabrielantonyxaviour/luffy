@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { Box, Container, Typography, Stack } from '@mui/material';
-import { Hero, Section, PlayerCard, Sponsors } from '@/components';
+import { Hero, Section, PlayerCard, Sponsors, FancyHeader } from '@/components';
 import { players } from '@/data';
 
 export default function Home() {

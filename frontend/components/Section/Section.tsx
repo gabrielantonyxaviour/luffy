@@ -1,5 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import { PropsWithChildren } from 'react';
+import { FancyHeader } from '../FancyHeader';
 
 const styles = {
   container: {
@@ -15,9 +16,7 @@ type SectionProps = {
 export const Section: React.FC<SectionProps> = ({ title, children }) => {
   return (
     <Box sx={styles.container}>
-      <Typography variant='h4' marginBottom={4}>
-        {title}
-      </Typography>
+      <FancyHeader text={title} />
       {children}
     </Box>
   );

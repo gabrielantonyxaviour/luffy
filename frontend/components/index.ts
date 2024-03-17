@@ -2,6 +2,7 @@ export { CoinPicker } from './CoinPicker';
 export { DynamicProvider } from './DynamicProvider';
 export { DynamicWidget } from './DynamicWidget';
 export { EnsWidget } from './EnsWidget';
+export { FancyHeader } from './FancyHeader';
 export { Header } from './Header';
 export { Hero } from './Hero';
 export { Logger } from './Logger';
