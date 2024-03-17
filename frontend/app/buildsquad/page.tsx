@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { Container, Typography, Box, Button, Stack } from '@mui/material';
 import { Pitch, SubmitSquad, Logger } from '@/components';
 import { useGeneralContext } from '@/contexts';
@@ -17,9 +18,14 @@ export default function BuildSquad() {
   return (
     <Box>
       <Container maxWidth='lg' sx={{ marginY: 3 }}>
-        <Typography variant='h4' marginBottom={3}>
-          Build Squad
-        </Typography>
+        <Box position='relative'>
+          <Typography variant='h4' marginBottom={3}>
+            Build Squad
+          </Typography>
+          <Box position='absolute' top={-22} left={140}>
+            <Image src='/glasses.gif' alt='classes' width={100} height={100} />
+          </Box>
+        </Box>
         <Stack
           direction='row'
           alignItems='flex-start'
