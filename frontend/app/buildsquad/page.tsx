@@ -5,7 +5,7 @@ import { Container, Typography, Box, Button, Stack } from "@mui/material";
 import { Pitch, SubmitSquad, Logger, FancyHeader } from "@/components";
 import { useGeneralContext } from "@/contexts";
 import { useClientAuth } from "@/hooks";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { createWalletClient, hexToBigInt, http } from "viem";
 import { baseSepolia } from "viem/chains";
 import { privateKeyToAccount } from "viem/accounts";
@@ -21,12 +21,15 @@ export default function BuildSquad() {
   const { squadGenerated, setSquadGenerated, addLog } = useGeneralContext();
   const { isAuthenticated } = useClientAuth();
   const { primaryWallet } = useDynamicContext();
+  const { setNullifierHash } = useGeneralContext();
 
   const { address } = primaryWallet || {};
 
   const [amount, setAmount] = useState<number>(0);
+  const [betChainId, setBetChainId] = useState<number>(0);
   const [worldcoin, setWorldCoin] = useState<any>(null);
   const [worldVerified, setWorldVerified] = useState<boolean>(true);
+  const [betPlaced, setBetPlaced] = useState<boolean>(false);
   const [logs, setLogs] = useState<string[]>([]);
   const handleOnAutofill = () => {
     setLogs((prev) => [...prev, "You squad has been autofilled successfully"]);
@@ -34,59 +37,65 @@ export default function BuildSquad() {
   };
 
   useEffect(() => {
-    if (worldcoin && address) {
-      setLogs((prev) => [...prev, "Worldcoin proof generated successfully"]);
-      setLogs((prev) => [...prev, worldcoin.proofs]);
+    if (!worldVerified) {
+      if (worldcoin && address) {
+        setLogs((prev) => [...prev, "Worldcoin proof generated successfully"]);
+        setLogs((prev) => [...prev, worldcoin.proofs]);
 
-      (async function () {
-        try {
-          console.log("PRIVATE KEY");
-          console.log(process.env.NEXT_PUBLIC_PRIVATE_KEY);
-          const account = privateKeyToAccount(
-            (process.env.NEXT_PUBLIC_PRIVATE_KEY as `0x${string}`) || "0x"
-          );
-          console.log("BASE SEPOLIA");
-          console.log(process.env.NEXT_PUBLIC_BASE_SEPOLIA_URL);
-          const walletClient = createWalletClient({
-            chain: baseSepolia,
-            account,
-            transport: http(process.env.NEXT_PUBLIC_BASE_SEPOLIA_URL),
-          });
+        (async function () {
+          try {
+            console.log("PRIVATE KEY");
+            console.log(process.env.NEXT_PUBLIC_PRIVATE_KEY);
+            const account = privateKeyToAccount(
+              (process.env.NEXT_PUBLIC_PRIVATE_KEY as `0x${string}`) || "0x"
+            );
+            console.log("BASE SEPOLIA");
+            console.log(process.env.NEXT_PUBLIC_BASE_SEPOLIA_URL);
+            const walletClient = createWalletClient({
+              chain: baseSepolia,
+              account,
+              transport: http(process.env.NEXT_PUBLIC_BASE_SEPOLIA_URL),
+            });
 
-          const publicClient = createPublicClient({
-            chain: baseSepolia,
-            transport: http(process.env.NEXT_PUBLIC_BASE_SEPOLIA_URL),
-          });
+            const publicClient = createPublicClient({
+              chain: baseSepolia,
+              transport: http(process.env.NEXT_PUBLIC_BASE_SEPOLIA_URL),
+            });
 
-          console.log([
-            address,
-            hexToBigInt(worldcoin.merkle_root),
-            hexToBigInt(worldcoin.nullifier_hash),
-            worldcoin.proofs,
-          ]);
-          const { request } = await publicClient.simulateContract({
-            account,
-            address: WORLDCOIN_VERIFIER_ADDRESS,
-            abi: WORLDCOIN_VERIFIER_ABI,
-            functionName: "verifyAndExecute",
-            args: [
+            console.log([
               address,
               hexToBigInt(worldcoin.merkle_root),
               hexToBigInt(worldcoin.nullifier_hash),
               worldcoin.proofs,
-            ],
-          });
+            ]);
+            setNullifierHash(worldcoin.nullifier_hash);
+            const { request } = await publicClient.simulateContract({
+              account,
+              address: WORLDCOIN_VERIFIER_ADDRESS,
+              abi: WORLDCOIN_VERIFIER_ABI,
+              functionName: "verifyAndExecute",
+              args: [
+                address,
+                hexToBigInt(worldcoin.merkle_root),
+                hexToBigInt(worldcoin.nullifier_hash),
+                worldcoin.proofs,
+              ],
+            });
 
-          const tx = await walletClient.writeContract(request);
-          setLogs((prev) => [...prev, "Worldcoin proof verified on-chain"]);
-          setLogs((prev) => [...prev, "https://sepolia.basescan.org/tx/" + tx]);
-          setWorldVerified(true);
-        } catch (e) {
-          setLogs((prev) => [...prev, "Worldcoin proof verification failed"]);
-          setLogs((prev) => [...prev, (e as any).toString()]);
-          console.log(e);
-        }
-      })();
+            const tx = await walletClient.writeContract(request);
+            setLogs((prev) => [...prev, "Worldcoin proof verified on-chain"]);
+            setLogs((prev) => [
+              ...prev,
+              "https://sepolia.basescan.org/tx/" + tx,
+            ]);
+            setWorldVerified(true);
+          } catch (e) {
+            setLogs((prev) => [...prev, "Worldcoin proof verification failed"]);
+            setLogs((prev) => [...prev, (e as any).toString()]);
+            console.log(e);
+          }
+        })();
+      }
     }
   }, [worldcoin, address]);
 
@@ -111,7 +120,7 @@ export default function BuildSquad() {
             }}
           >
             <Stack direction="row" spacing={2}>
-              {worldVerified && (
+              {worldVerified && !betPlaced && (
                 <>
                   <Button
                     disabled={!isAuthenticated}
@@ -124,13 +133,16 @@ export default function BuildSquad() {
 
                   <ChooseBet
                     amount={amount}
+                    setChainId={(chainId: number) => {
+                      setBetChainId(chainId);
+                    }}
                     setAmount={(_amount) => {
                       setAmount(_amount);
                     }}
                   />
                 </>
               )}
-              {!worldVerified && (
+              {!worldVerified && !betPlaced && (
                 <SubmitSquad
                   setWorldCoin={(data) => {
                     setWorldCoin(data);

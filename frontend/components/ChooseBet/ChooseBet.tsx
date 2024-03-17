@@ -14,30 +14,79 @@ import {
   Button,
 } from "@mui/material";
 import Image from "next/image";
-import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
+import {
+  createWalletClientFromWallet,
+  useDynamicContext,
+} from "@dynamic-labs/sdk-react-core";
+import { createPublicClient, hexToBigInt, http } from "viem";
+import { sepolia, spicy } from "viem/chains";
+import {
+  LUFFY_REWARDS_ABI,
+  LUFFY_REWARDS_CHILIZ_ADDRESS,
+  LUFFY_REWARDS_SEPOLIA_ADDRESS,
+} from "@/utils/constants";
+import { useGeneralContext } from "@/contexts";
 
 export const ChooseBet = ({
   amount,
   setAmount,
+  setChainId,
 }: {
   amount: number;
   setAmount: (amount: number) => void;
+  setChainId: (chainId: number) => void;
 }) => {
   const [coin, setCoin] = useState("CHZ");
   const { network, setNetwork } = useDynamicContext();
+  const { primaryWallet } = useDynamicContext();
+  const { nullifierHash } = useGeneralContext();
+  const placeBet = async () => {
+    if (primaryWallet) {
+      console.log(network);
+      if (coin == "CHZ" && network != 88882) {
+        setNetwork(88882);
 
-  const placeBet = () => {
-    console.log(network);
-    if (coin == "CHZ" && network != 88882) {
-      setNetwork(88882);
-    } else if (coin == "APE" && network != 11155111) {
-      setNetwork(11155111);
+        const publicClient = createPublicClient({
+          chain: spicy,
+          transport: http(process.env.NEXT_PUBLIC_CHILIZ_URL),
+        });
+        const walletClient = await createWalletClientFromWallet(primaryWallet);
+
+        const { request } = await publicClient.simulateContract({
+          address: LUFFY_REWARDS_CHILIZ_ADDRESS,
+          abi: LUFFY_REWARDS_ABI,
+          functionName: "betAmount",
+          args: [1, hexToBigInt(nullifierHash as `0x${string}`), amount, true],
+          account: primaryWallet.address as `0x${string}`,
+        });
+        const tx = await walletClient.writeContract(request);
+        console.log(tx);
+      } else if (coin == "APE" && network != 11155111) {
+        setNetwork(11155111);
+
+        const publicClient = createPublicClient({
+          chain: sepolia,
+          transport: http(process.env.NEXT_PUBLIC_SEPOLIA_URL),
+        });
+        const walletClient = await createWalletClientFromWallet(primaryWallet);
+
+        const { request } = await publicClient.simulateContract({
+          address: LUFFY_REWARDS_SEPOLIA_ADDRESS,
+          abi: LUFFY_REWARDS_ABI,
+          functionName: "betAmount",
+          args: [1, hexToBigInt(nullifierHash as `0x${string}`), amount, true],
+          account: primaryWallet.address as `0x${string}`,
+        });
+        const tx = await walletClient.writeContract(request);
+        console.log(tx);
+      }
+      console.log("Placing bet");
     }
-    console.log("Placing bet");
   };
 
   const handleChange = (event: SelectChangeEvent) => {
     setCoin(event.target.value as string);
+    setChainId(event.target.value == "CHZ" ? 88882 : 11155111);
   };
   const StyledInput = styled("input")({
     "&::-webkit-outer-spin-button, &::-webkit-inner-spin-button": {

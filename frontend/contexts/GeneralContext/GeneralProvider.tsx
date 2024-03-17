@@ -12,6 +12,7 @@ export const GeneralProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [logs, setLogs] = useState<string[]>([]);
   const [chzBalance, setChzBalance] = useState("0");
   const [apeBalance, setApeBalance] = useState("0");
+  const [nullifierHash, setNullifierHash] = useState("");
 
   const addLog = (log: string) => {
     setLogs((prevLogs) => [...prevLogs, log]);
@@ -28,6 +29,8 @@ export const GeneralProvider: React.FC<PropsWithChildren> = ({ children }) => {
     setChzBalance,
     apeBalance,
     setApeBalance,
+    nullifierHash,
+    setNullifierHash,
   };
 
   return <Provider value={providerValue}>{children}</Provider>;

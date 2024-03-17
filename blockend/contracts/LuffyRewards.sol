@@ -48,7 +48,7 @@ contract LuffyRewards {
         _;
     }
 
-    function betAmount(uint256 _gameWeek, uint256 _nullifier, uint256 _amount, bool isChilizOrApeCoin) public payable {
+    function betAmount(uint256 _gameWeek, uint256 _nullifier, uint256 _amount) public payable {
         if(_amount > 0) revert InvalidTokenAmount(_amount);
         if(_gameWeek!=gameWeekCounter+1) revert InvalidGameweek(_gameWeek);
         if(address(REWARD_TOKEN_ADDRESS) != address(0))

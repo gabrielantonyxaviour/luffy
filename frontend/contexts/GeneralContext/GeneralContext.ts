@@ -13,6 +13,8 @@ export type GeneralContextType = {
   setChzBalance: (balance: string) => void;
   apeBalance: string;
   setApeBalance: (balance: string) => void;
+  nullifierHash: string;
+  setNullifierHash: (hash: string) => void;
 };
 
 const defaultValue: GeneralContextType = {
@@ -26,6 +28,8 @@ const defaultValue: GeneralContextType = {
   setChzBalance: () => {},
   apeBalance: "0",
   setApeBalance: () => {},
+  nullifierHash: "",
+  setNullifierHash: () => {},
 };
 
 export const GeneralContext = createContext<GeneralContextType>(defaultValue);
