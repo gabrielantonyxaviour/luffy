@@ -35,6 +35,9 @@ contract LuffyRewards {
         protocolAddress = _protocolAddress;
     }
 
+    receive() external payable {}
+    fallback() external payable {}
+
     event BetPlaced(uint256 indexed gameWeek, uint256 indexed nullifierHash, uint256 tokenAmount);
     event RewardsClaimed(uint256 indexed gameWeek, uint256 indexed nullifierHash, uint256 tokenAmount);
 
@@ -47,17 +50,11 @@ contract LuffyRewards {
         if(msg.sender != address(mailbox)) revert NotMailbox(msg.sender);
         _;
     }
-
+    
     function betAmount(uint256 _gameWeek, uint256 _nullifier, uint256 _amount) public payable {
         if(_amount == 0) revert InvalidTokenAmount(_amount);
         if(_gameWeek!=gameWeekCounter+1) revert InvalidGameweek(_gameWeek);
-        if(address(REWARD_TOKEN_ADDRESS) != address(0))
-        {
-            if(REWARD_TOKEN_ADDRESS.allowance(msg.sender, address(this)) < _amount) revert TokenNotApproved(_amount);   
-            REWARD_TOKEN_ADDRESS.transferFrom(msg.sender, address(this), _amount);
-        } else{
-            payable(address(this)).transfer(_amount);
-        }
+       
         playerToBetAmounts[_nullifier] += _amount;
         playerToAddress[_nullifier] = msg.sender;
         
@@ -84,7 +81,12 @@ contract LuffyRewards {
         _claimRewards(_gameWeek, _nullifierHash, _amount);
     }
 
-    
+
+    // helper functions
+
+    function setGameweekCounter(uint256 _gameWeek) public onlyOwner{
+        gameWeekCounter = _gameWeek;
+    }
 
 
     // // Hyperlane Playground

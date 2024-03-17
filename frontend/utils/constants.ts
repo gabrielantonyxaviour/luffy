@@ -1,9 +1,9 @@
 const WORLDCOIN_VERIFIER_ADDRESS = "0xae82f939962be8119f29e3a657ff6a07745fd735";
 const APECOIN_SEPOLIA_ADDRESS = "0x01e61008f78a83e0dabd2fbd7ef81b64cdd2e1f4";
 const LUFFY_REWARDS_CHILIZ_ADDRESS =
-  "0xD4171D5a25B3A684d1952Dd8141fA27911004f12";
+  "0x1c89e2970889cA2eA64078c9A87eBEd03D68a541";
 const LUFFY_REWARDS_SEPOLIA_ADDRESS =
-  "0xa182fbb163323137ebd9a1d96990264e80494a10";
+  "0x7dca30F5B6A23c5f6f0Da17b7EAb95Eda44a60b4";
 const LUFFY_PROTOCOL_ADDRESS = "0x8723e1E9955BC0461a12ADD57DEa5Ab84B3aFdAc";
 const LUFFY_PROTOCOL_ABI = [
   {
@@ -567,40 +567,93 @@ const LUFFY_PROTOCOL_ABI = [
 const LUFFY_REWARDS_ABI = [
   {
     inputs: [
-      { internalType: "contract IMailbox", name: "_mailbox", type: "address" },
-      { internalType: "string", name: "_rewardToken", type: "string" },
+      {
+        internalType: "contract IMailbox",
+        name: "_mailbox",
+        type: "address",
+      },
+      {
+        internalType: "string",
+        name: "_rewardToken",
+        type: "string",
+      },
       {
         internalType: "contract IERC20",
         name: "_rewardTokenAddress",
         type: "address",
       },
-      { internalType: "bytes32", name: "_protocolAddress", type: "bytes32" },
+      {
+        internalType: "bytes32",
+        name: "_protocolAddress",
+        type: "bytes32",
+      },
     ],
     stateMutability: "nonpayable",
     type: "constructor",
   },
   {
-    inputs: [{ internalType: "uint256", name: "gameweek", type: "uint256" }],
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "gameweek",
+        type: "uint256",
+      },
+    ],
     name: "InvalidGameweek",
     type: "error",
   },
   {
-    inputs: [{ internalType: "uint256", name: "_amount", type: "uint256" }],
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_amount",
+        type: "uint256",
+      },
+    ],
     name: "InvalidTokenAmount",
     type: "error",
   },
   {
-    inputs: [{ internalType: "bytes32", name: "caller", type: "bytes32" }],
+    inputs: [
+      {
+        internalType: "bytes32",
+        name: "caller",
+        type: "bytes32",
+      },
+    ],
     name: "NotAllowedCaller",
     type: "error",
   },
   {
-    inputs: [{ internalType: "address", name: "caller", type: "address" }],
+    inputs: [
+      {
+        internalType: "address",
+        name: "caller",
+        type: "address",
+      },
+    ],
     name: "NotMailbox",
     type: "error",
   },
   {
-    inputs: [{ internalType: "uint256", name: "_amount", type: "uint256" }],
+    inputs: [
+      {
+        internalType: "address",
+        name: "caller",
+        type: "address",
+      },
+    ],
+    name: "NotOwner",
+    type: "error",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_amount",
+        type: "uint256",
+      },
+    ],
     name: "TokenNotApproved",
     type: "error",
   },
@@ -657,23 +710,46 @@ const LUFFY_REWARDS_ABI = [
   {
     inputs: [],
     name: "REWARD_TOKEN",
-    outputs: [{ internalType: "string", name: "", type: "string" }],
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [],
     name: "REWARD_TOKEN_ADDRESS",
-    outputs: [{ internalType: "contract IERC20", name: "", type: "address" }],
+    outputs: [
+      {
+        internalType: "contract IERC20",
+        name: "",
+        type: "address",
+      },
+    ],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [
-      { internalType: "uint256", name: "_gameWeek", type: "uint256" },
-      { internalType: "uint256", name: "_nullifier", type: "uint256" },
-      { internalType: "uint256", name: "_amount", type: "uint256" },
-      { internalType: "bool", name: "isChilizOrApeCoin", type: "bool" },
+      {
+        internalType: "uint256",
+        name: "_gameWeek",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "_nullifier",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "_amount",
+        type: "uint256",
+      },
     ],
     name: "betAmount",
     outputs: [],
@@ -683,15 +759,33 @@ const LUFFY_REWARDS_ABI = [
   {
     inputs: [],
     name: "gameWeekCounter",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [
-      { internalType: "uint32", name: "_origin", type: "uint32" },
-      { internalType: "bytes32", name: "_sender", type: "bytes32" },
-      { internalType: "bytes", name: "_message", type: "bytes" },
+      {
+        internalType: "uint32",
+        name: "_origin",
+        type: "uint32",
+      },
+      {
+        internalType: "bytes32",
+        name: "_sender",
+        type: "bytes32",
+      },
+      {
+        internalType: "bytes",
+        name: "_message",
+        type: "bytes",
+      },
     ],
     name: "handle",
     outputs: [],
@@ -701,43 +795,110 @@ const LUFFY_REWARDS_ABI = [
   {
     inputs: [],
     name: "mailbox",
-    outputs: [{ internalType: "contract IMailbox", name: "", type: "address" }],
+    outputs: [
+      {
+        internalType: "contract IMailbox",
+        name: "",
+        type: "address",
+      },
+    ],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [],
     name: "owner",
-    outputs: [{ internalType: "address", name: "", type: "address" }],
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
     stateMutability: "view",
     type: "function",
   },
   {
-    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
     name: "playerToAddress",
-    outputs: [{ internalType: "address", name: "", type: "address" }],
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
     stateMutability: "view",
     type: "function",
   },
   {
-    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
     name: "playerToBetAmounts",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
     stateMutability: "view",
     type: "function",
   },
   {
-    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
     name: "playerToRewardAmounts",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [],
     name: "protocolAddress",
-    outputs: [{ internalType: "bytes32", name: "", type: "bytes32" }],
+    outputs: [
+      {
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
+      },
+    ],
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_gameWeek",
+        type: "uint256",
+      },
+    ],
+    name: "setGameweekCounter",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
 ];
@@ -807,6 +968,29 @@ const ERC20_ABI = [
     constant: false,
     inputs: [
       {
+        name: "_spender",
+        type: "address",
+      },
+      {
+        name: "_value",
+        type: "uint256",
+      },
+    ],
+    name: "approve",
+    outputs: [
+      {
+        name: "success",
+        type: "bool",
+      },
+    ],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    constant: false,
+    inputs: [
+      {
         name: "_to",
         type: "address",
       },
@@ -848,7 +1032,30 @@ const ERC20_ABI = [
     name: "Transfer",
     type: "event",
   },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: "owner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        name: "spender",
+        type: "address",
+      },
+      {
+        indexed: false,
+        name: "value",
+        type: "uint256",
+      },
+    ],
+    name: "Approval",
+    type: "event",
+  },
 ];
+
 const WORLDCOIN_VERIFIER_ABI = [
   {
     inputs: [

@@ -18,9 +18,17 @@ import {
   createWalletClientFromWallet,
   useDynamicContext,
 } from "@dynamic-labs/sdk-react-core";
-import { createPublicClient, hexToBigInt, http } from "viem";
+import {
+  createPublicClient,
+  formatUnits,
+  hexToBigInt,
+  http,
+  parseEther,
+} from "viem";
 import { sepolia, spicy } from "viem/chains";
 import {
+  APECOIN_SEPOLIA_ADDRESS,
+  ERC20_ABI,
   LUFFY_REWARDS_ABI,
   LUFFY_REWARDS_CHILIZ_ADDRESS,
   LUFFY_REWARDS_SEPOLIA_ADDRESS,
@@ -51,13 +59,19 @@ export const ChooseBet = ({
           transport: http(process.env.NEXT_PUBLIC_CHILIZ_URL),
         });
         const walletClient = await createWalletClientFromWallet(primaryWallet);
-
+        console.log("NULLIFIER HASH");
+        console.log(nullifierHash);
         const { request } = await publicClient.simulateContract({
           address: LUFFY_REWARDS_CHILIZ_ADDRESS,
           abi: LUFFY_REWARDS_ABI,
           functionName: "betAmount",
-          args: [1, hexToBigInt(nullifierHash as `0x${string}`), amount, true],
+          args: [
+            3,
+            0, //hexToBigInt(nullifierHash as `0x${string}`),
+            parseEther(amount.toString()),
+          ],
           account: primaryWallet.address as `0x${string}`,
+          value: parseEther(amount.toString()),
         });
         const tx = await walletClient.writeContract(request);
         console.log(tx);
@@ -70,14 +84,27 @@ export const ChooseBet = ({
         });
         const walletClient = await createWalletClientFromWallet(primaryWallet);
 
-        const { request } = await publicClient.simulateContract({
+        const { request: approvalTx } = await publicClient.simulateContract({
+          address: APECOIN_SEPOLIA_ADDRESS,
+          abi: ERC20_ABI,
+          functionName: "approve",
+          args: [LUFFY_REWARDS_SEPOLIA_ADDRESS, parseEther(amount.toString())],
+        });
+        const approvalTxHash = await walletClient.writeContract(approvalTx);
+        console.log(approvalTxHash);
+        const { request: placeBetTx } = await publicClient.simulateContract({
           address: LUFFY_REWARDS_SEPOLIA_ADDRESS,
           abi: LUFFY_REWARDS_ABI,
           functionName: "betAmount",
-          args: [1, hexToBigInt(nullifierHash as `0x${string}`), amount, true],
+          args: [
+            1,
+            hexToBigInt(nullifierHash as `0x${string}`),
+            parseEther(amount.toString()),
+          ],
           account: primaryWallet.address as `0x${string}`,
+          value: parseEther(amount.toString()),
         });
-        const tx = await walletClient.writeContract(request);
+        const tx = await walletClient.writeContract(placeBetTx);
         console.log(tx);
       }
       console.log("Placing bet");
