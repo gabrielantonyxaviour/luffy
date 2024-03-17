@@ -1,10 +1,10 @@
-"use client";
-import { Container, Typography, Box, Stack } from "@mui/material";
-import circuit from "@/utils/circuit.json";
-import { Pitch, Logger, ResultsCard, FancyHeader } from "@/components";
-import { useState } from "react";
-import computeMerkleRoot from "@/utils/cryptography-helpers/computeMerkleRoot";
-import computeMerklePath from "@/utils/cryptography-helpers/computeMerklePath";
+'use client';
+import { Container, Typography, Box, Stack } from '@mui/material';
+import circuit from '@/utils/circuit.json';
+import { Pitch, Logger, ResultsCard, FancyHeader } from '@/components';
+import { useState } from 'react';
+import computeMerkleRoot from '@/utils/cryptography-helpers/computeMerkleRoot';
+import computeMerklePath from '@/utils/cryptography-helpers/computeMerklePath';
 import {
   bytesToHex,
   createPublicClient,
@@ -13,24 +13,24 @@ import {
   hexToBytes,
   http,
   recoverPublicKey,
-  toBytes,
-} from "viem";
-import computeSquadHash from "@/utils/cryptography-helpers/computeSquadHash";
+  toBytes
+} from 'viem';
+import computeSquadHash from '@/utils/cryptography-helpers/computeSquadHash';
 import {
   BarretenbergBackend,
-  CompiledCircuit,
-} from "@noir-lang/backend_barretenberg";
-import { Noir } from "@noir-lang/noir_js";
+  CompiledCircuit
+} from '@noir-lang/backend_barretenberg';
+import { Noir } from '@noir-lang/noir_js';
 import {
   createWalletClientFromWallet,
-  useDynamicContext,
-} from "@dynamic-labs/sdk-react-core";
-import { arbitrumSepolia } from "viem/chains";
-import { useGeneralContext } from "@/contexts";
+  useDynamicContext
+} from '@dynamic-labs/sdk-react-core';
+import { arbitrumSepolia } from 'viem/chains';
+import { useGeneralContext } from '@/contexts';
 
 export default function YourResults() {
   const [logs, setLogs] = useState<string[]>([]);
-  const [proof, setProof] = useState<string>(""); // [u8; 32][
+  const [proof, setProof] = useState<string>(''); // [u8; 32][
   const { primaryWallet } = useDynamicContext();
   const { nullifierHash } = useGeneralContext();
   async function generateProof() {
@@ -53,7 +53,7 @@ export default function YourResults() {
         number
       ] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]; // [u8; 11]
       let player_ids_secret: `0x${string}` =
-        "0x6a7b4e73f99ad819e9d9b26d52c87c90bc963f4d14d6cbb62f0010f18de1cb31"; // [u8; 32]
+        '0x6a7b4e73f99ad819e9d9b26d52c87c90bc963f4d14d6cbb62f0010f18de1cb31'; // [u8; 32]
       let player_points: [
         number,
         number,
@@ -86,25 +86,25 @@ export default function YourResults() {
       const walletClient = await createWalletClientFromWallet(primaryWallet);
       const publicClient = createPublicClient({
         chain: arbitrumSepolia,
-        transport: http(process.env.NEXT_PUBLIC_ARB_SEPOLIA_URL),
+        transport: http(process.env.NEXT_PUBLIC_ARB_SEPOLIA_URL)
       });
       const sig = Buffer.from(
         (
           await walletClient.signMessage({
             account: primaryWallet.address as `0x${string}`,
             message: {
-              raw: squad_hash,
-            },
+              raw: squad_hash
+            }
           })
         ).slice(2),
-        "hex"
+        'hex'
       );
 
       const publicKey = await recoverPublicKey({
-        hash: Buffer.from(hashMessage({ raw: squad_hash }).slice(2), "hex"),
-        signature: sig,
+        hash: Buffer.from(hashMessage({ raw: squad_hash }).slice(2), 'hex'),
+        signature: sig
       });
-      const publicKeyBuffer = Buffer.from(publicKey.slice(2), "hex");
+      const publicKeyBuffer = Buffer.from(publicKey.slice(2), 'hex');
       const trimmedSig = new Uint8Array(sig.subarray(0, sig.length - 1));
 
       // Extract x and y coordinates
@@ -114,7 +114,7 @@ export default function YourResults() {
       const yCoordHex = Array.from(publicKeyBuffer.subarray(33)).map(
         (byte) => `${byte}`
       );
-      setLogs((prev) => [...prev, "Generating proof... ⏳"]);
+      setLogs((prev) => [...prev, 'Generating proof... ⏳']);
       console.log({
         signer_pub_x_key: Array.from(xCoordHex).map((byte) => `${byte}`),
         signer_pub_y_key: Array.from(yCoordHex).map((byte) => `${byte}`),
@@ -131,8 +131,8 @@ export default function YourResults() {
           (byte) => `${byte}`
         ),
         squad_hash: Array.from(
-          Buffer.from(hashMessage({ raw: squad_hash }).slice(2), "hex")
-        ).map((byte) => `${byte}`),
+          Buffer.from(hashMessage({ raw: squad_hash }).slice(2), 'hex')
+        ).map((byte) => `${byte}`)
       });
 
       const proof = await noir.generateFinalProof({
@@ -151,26 +151,26 @@ export default function YourResults() {
           (byte) => `${byte}`
         ),
         squad_hash: Array.from(
-          Buffer.from(hashMessage({ raw: squad_hash }).slice(2), "hex")
-        ).map((byte) => `${byte}`),
+          Buffer.from(hashMessage({ raw: squad_hash }).slice(2), 'hex')
+        ).map((byte) => `${byte}`)
       });
       console.log(proof);
 
-      console.log("SQUAD HASH");
+      console.log('SQUAD HASH');
       console.log(squad_hash);
-      console.log("PLAYER POINTS ROOT");
+      console.log('PLAYER POINTS ROOT');
       console.log(all_points_root);
       console.log(bytesToHex(proof.proof));
 
       setProof(bytesToHex(proof.proof));
-      setLogs((prev) => [...prev, "Proof Generation Success 😏"]);
-      setLogs((prev) => [...prev, "Verifying proof... ⏳"]);
+      setLogs((prev) => [...prev, 'Proof Generation Success 😏']);
+      setLogs((prev) => [...prev, 'Verifying proof... ⏳']);
       const isValid = await noir.verifyFinalProof(proof);
 
       if (isValid) {
-        setLogs((prev) => [...prev, "Proof verified ✅"]);
+        setLogs((prev) => [...prev, 'Proof verified ✅']);
       } else {
-        setLogs((prev) => [...prev, "Proof verification failed ❌"]);
+        setLogs((prev) => [...prev, 'Proof verification failed ❌']);
       }
       const totalPoints = total_points;
       const nullifier = nullifierHash;
@@ -181,45 +181,40 @@ export default function YourResults() {
   }
   return (
     <Box>
-      <Container maxWidth="lg" sx={{ marginY: 3 }}>
-        <FancyHeader text="Your Results" />
+      <Container maxWidth='lg' sx={{ marginY: 3 }}>
+        <FancyHeader text='Your Results' />
         <Stack
-          direction="row"
-          alignItems="flex-start"
-          justifyItems="center"
+          direction='row'
+          alignItems='flex-start'
+          justifyItems='center'
           gap={5}
         >
           <Pitch
             results={[
-              "4",
-              "24",
-              "25",
-              "18",
-              "18",
-              "36",
-              "30",
-              "30",
-              "15",
-              "14",
-              "12",
+              '4',
+              '24',
+              '25',
+              '18',
+              '18',
+              '36',
+              '30',
+              '30',
+              '15',
+              '14',
+              '12'
             ]}
           />
           <Box
             sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              width: "100%",
-              gap: 3,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              width: '100%',
+              gap: 3
             }}
           >
-<<<<<<< Updated upstream
-            <ResultsCard />
-            <Typography variant="h4">Logs</Typography>
-=======
             <ResultsCard points='12' rewards='100' currency='CZH' />
             <Typography variant='h4'>Logs</Typography>
->>>>>>> Stashed changes
             <Logger logs={logs} />
           </Box>
         </Stack>
