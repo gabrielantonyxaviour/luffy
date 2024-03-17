@@ -33,7 +33,6 @@ fn main(
     for point in squad_points {
         calculated_total_points+=point as u8;
     }
-
     assert(calculated_total_points == total_points);
 }
 

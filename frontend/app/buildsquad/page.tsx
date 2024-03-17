@@ -34,7 +34,7 @@ export default function BuildSquad() {
   const [amount, setAmount] = useState<number>(0);
   const [betChainId, setBetChainId] = useState<number>(0);
   const [worldcoin, setWorldCoin] = useState<any>(null);
-  const [worldVerified, setWorldVerified] = useState<boolean>(true);
+  const [worldVerified, setWorldVerified] = useState<boolean>(false);
   const [betPlaced, setBetPlaced] = useState<boolean>(false);
   const [logs, setLogs] = useState<string[]>([]);
   const handleOnAutofill = () => {
