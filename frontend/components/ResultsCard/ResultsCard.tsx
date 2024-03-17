@@ -6,28 +6,43 @@ const styles = {
     border: '1px solid #ffffff22',
     padding: 2,
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
     borderRadius: 2,
-    gap: 1
+    gap: 1,
+    width: '520px',
+    justifyContent: 'space-around',
+    alignItems: 'flex-end'
   }
 };
 
-export const ResultsCard = () => {
+type ResultsCardProps = {
+  points: string;
+  rewards: string;
+  currency: 'CZH' | 'APE';
+};
+
+export const ResultsCard: React.FC<ResultsCardProps> = ({
+  points,
+  rewards,
+  currency
+}) => {
   return (
     <Box sx={styles.container}>
-      <Stack direction='row' justifyContent='space-between' spacing={5}>
-        <Stack>
-          <Typography fontWeight={500}>Result:</Typography>
-          <Typography fontWeight={500}>Reward:</Typography>
-        </Stack>
-        <Stack alignItems='flex-end'>
-          <Typography fontWeight={300}>12 points</Typography>
-          <Typography fontWeight={300}>100 CZH</Typography>
-        </Stack>
+      <Stack spacing={1} justifyContent='center' alignItems='center'>
+        <Typography variant='h5'>Result</Typography>
+        <Typography fontSize={20} color='warning.main'>
+          {points} points
+        </Typography>
       </Stack>
-      <Button variant='contained' size='small'>
+      <Button variant='contained' color='success'>
         Claim
       </Button>
+      <Stack spacing={1} justifyContent='center' alignItems='center'>
+        <Typography variant='h5'>Reward</Typography>
+        <Typography fontSize={20} color='warning.main'>
+          {rewards} {currency}
+        </Typography>
+      </Stack>
     </Box>
   );
 };
