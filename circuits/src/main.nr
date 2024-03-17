@@ -19,14 +19,14 @@ fn main(
     assert(recoveredAddress == computedAddress);
 
     // verify the merkle path of the point to confirm that is actually the points of the player
-    // for i in squad_player_ids {
-    //     let computed_root= compute_merkle_root(
-    //         squad_points[i], // leaf
-    //         squad_player_ids[i], // index
-    //         player_points_merkle_paths[i] // merkle proof
-    //     );
-    //     assert(computed_root == player_points_root);
-    // }
+    for i in squad_player_ids {
+        let computed_root= compute_merkle_root(
+            squad_points[i], // leaf
+            squad_player_ids[i], // index
+            player_points_merkle_paths[i] // merkle proof
+        );
+        assert(computed_root == player_points_root);
+    }
 
     // sum all points and return it back to the contract
     let mut calculated_total_points: u8 = 0;
