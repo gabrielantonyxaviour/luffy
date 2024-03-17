@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { Box, Container, Typography, Stack } from '@mui/material';
 import { Links } from './Links';
 import { CoinPicker, DynamicWidget, EnsWidget } from '@/components';
+import { useClientAuth } from '@/hooks';
 
 const styles = {
   display: 'flex',
@@ -15,6 +16,7 @@ const styles = {
 
 export const Header = () => {
   const pathname = usePathname();
+  const { isAuthenticated } = useClientAuth();
 
   return (
     <Box component='nav'>
@@ -31,7 +33,7 @@ export const Header = () => {
           </Typography>
         </Stack>
         <Links pathname={pathname} />
-        <CoinPicker />
+        {isAuthenticated && <CoinPicker />}
         <Stack direction='row' alignItems='center' spacing={1.5}>
           <EnsWidget />
           <DynamicWidget />

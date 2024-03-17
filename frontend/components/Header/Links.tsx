@@ -22,16 +22,16 @@ const links = [
     text: 'Home'
   },
   {
-    href: '/gameplay',
-    text: 'Game Play'
+    href: '/buildsquad',
+    text: 'Build Squad'
+  },
+  {
+    href: '/yourresults',
+    text: 'Your Results'
   },
   {
     href: '/leaderboard',
     text: 'Leaderboard'
-  },
-  {
-    href: '/playerlist',
-    text: 'Player List'
   }
 ];
 

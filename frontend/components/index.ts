@@ -7,6 +7,7 @@ export { Hero } from './Hero';
 export { Logger } from './Logger';
 export { Pitch } from './Pitch';
 export { PlayerCard } from './PlayerCard';
+export { ResultsCard } from './ResultsCard';
 export { Section } from './Section';
 export { Sponsors } from './Sponsors';
 export { SubmitEnsDialog } from './SubmitEnsDialog';
