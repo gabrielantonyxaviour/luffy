@@ -133,11 +133,9 @@ contract LuffyProtocol is FunctionsClient, ConfirmedOwner {
             }catch{
                 revert ZeroKnowledgeVerificationFailed();
             }
-        }
-        if(isChilizOrApeCoin){
-            // Chiliz or ApeCoin rewards are claimed in Base Sepolia
-        }else{
-            // WorldCoin rewards are claimed in Base Sepolia
+        } else{
+            _mintRewards(isChilizOrApeCoin, totalPoints, _nullifierHash);
+            emit RewardsClaimed(gameweekCounter-1, _nullifierHash, totalPoints, isChilizOrApeCoin);
         }
     }
 

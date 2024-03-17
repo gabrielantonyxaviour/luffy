@@ -21,7 +21,7 @@ import {
   useDynamicContext,
 } from "@dynamic-labs/sdk-react-core";
 import { ChooseBet } from "@/components/ChooseBet";
-import computeMerkleRoot from "@/utils/computeMerkleRoot";
+import computeMerkleRoot from "@/utils/cryptography-helpers/computeMerkleRoot";
 
 export default function BuildSquad() {
   const { squadGenerated, setSquadGenerated, addLog } = useGeneralContext();
@@ -96,8 +96,7 @@ export default function BuildSquad() {
             ]);
             setWorldVerified(true);
           } catch (e) {
-            setLogs((prev) => [...prev, "Worldcoin proof verification failed"]);
-            setLogs((prev) => [...prev, (e as any).toString()]);
+            setLogs((prev) => [...prev, "Please Retry again"]);
             console.log(e);
           }
         })();
@@ -115,7 +114,9 @@ export default function BuildSquad() {
           justifyItems="center"
           gap={5}
         >
-          <Pitch />
+          <Pitch
+            results={["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"]}
+          />
           <Box
             sx={{
               display: "flex",
@@ -151,7 +152,6 @@ export default function BuildSquad() {
                       const walletClient = await createWalletClientFromWallet(
                         primaryWallet
                       );
-                      console.log("HEYYYYYYYYYY");
                       console.log([
                         1,
                         merkleRoot, //hexToBigInt(nullifierHash as `0x${string}`),
