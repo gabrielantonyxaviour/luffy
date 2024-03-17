@@ -27,7 +27,7 @@ export const Header = () => {
           alignItems='center'
           spacing={0.5}
         >
-          <Image src='/logo.svg' alt='logo' width={60} height={60} />
+          <Image src='/logo.png' alt='logo' width={80} height={80} />
           <Typography variant='h4' component='h3'>
             Luffy
           </Typography>

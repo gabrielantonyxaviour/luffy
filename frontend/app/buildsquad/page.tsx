@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Container, Typography, Box, Button, Stack } from "@mui/material";
 import { Pitch, SubmitSquad, Logger } from "@/components";
 import { useGeneralContext } from "@/contexts";
