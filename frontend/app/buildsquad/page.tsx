@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { Container, Typography, Box, Button, Stack } from "@mui/material";
-import { Pitch, SubmitSquad, Logger } from "@/components";
+import { Pitch, SubmitSquad, Logger, CoinPicker } from "@/components";
 import { useGeneralContext } from "@/contexts";
 import { useClientAuth } from "@/hooks";
 import { useEffect, useState } from "react";
@@ -15,6 +15,7 @@ import {
   WORLDCOIN_VERIFIER_ADDRESS,
 } from "@/utils/constants";
 import { useDynamicContext } from "@dynamic-labs/sdk-react-core";
+import { ChooseBet } from "@/components/ChooseBet";
 
 export default function BuildSquad() {
   const { squadGenerated, setSquadGenerated, addLog } = useGeneralContext();
@@ -23,6 +24,7 @@ export default function BuildSquad() {
 
   const { address } = primaryWallet || {};
 
+  const [amount, setAmount] = useState<number>(0);
   const [worldcoin, setWorldCoin] = useState<any>(null);
   const [logs, setLogs] = useState<string[]>([]);
   const handleOnAutofill = () => {
@@ -117,8 +119,15 @@ export default function BuildSquad() {
               >
                 Autofill Squad
               </Button>
+
+              <ChooseBet
+                amount={amount}
+                setAmount={(_amount) => {
+                  setAmount(_amount);
+                }}
+              />
               <SubmitSquad
-                isDisabled={!isAuthenticated || !squadGenerated}
+                isDisabled={!isAuthenticated || !squadGenerated || amount === 0}
                 setWorldCoin={(data) => {
                   setWorldCoin(data);
                 }}
