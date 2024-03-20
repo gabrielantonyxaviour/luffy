@@ -34,8 +34,8 @@ export default function BuildSquad() {
   const [amount, setAmount] = useState<number>(0);
   const [betChainId, setBetChainId] = useState<number>(0);
   const [worldcoin, setWorldCoin] = useState<any>(null);
-  const [worldVerified, setWorldVerified] = useState<boolean>(false);
-  const [betPlaced, setBetPlaced] = useState<boolean>(false);
+  const [worldVerified, setWorldVerified] = useState<boolean>(true);
+  const [betPlaced, setBetPlaced] = useState<boolean>(true);
   const [logs, setLogs] = useState<string[]>([]);
   const handleOnAutofill = () => {
     setLogs((prev) => [...prev, "You squad has been autofilled successfully"]);
@@ -89,14 +89,14 @@ export default function BuildSquad() {
             });
 
             const tx = await walletClient.writeContract(request);
-            setLogs((prev) => [...prev, "Worldcoin proof verified on-chain"]);
+            setLogs((prev) => [...prev, "Worldcoin proof verified on chain"]);
             setLogs((prev) => [
               ...prev,
               "https://sepolia.basescan.org/tx/" + tx,
             ]);
             setWorldVerified(true);
           } catch (e) {
-            setLogs((prev) => [...prev, "Please Retry again"]);
+            setLogs((prev) => [...prev, (e as any).toString()]);
             console.log(e);
           }
         })();
